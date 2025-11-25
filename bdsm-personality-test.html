@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BDSM人格测评 | Dominance-Submission Personality Assessment</title>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', 'Google Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #202124;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            animation: fadeInDown 0.6s ease-out;
+        }
+
+        .header h1 {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        .header .subtitle {
+            font-size: 18px;
+            opacity: 0.95;
+            font-weight: 400;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 48px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+            margin-bottom: 20px;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* 封面页样式 */
+        .cover-page {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .cover-content {
+            text-align: center;
+            max-width: 800px;
+            animation: coverFadeIn 1s ease-out;
+        }
+
+        .cover-icon {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 40px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            animation: floatAnimation 3s ease-in-out infinite;
+        }
+
+        .cover-icon svg {
+            width: 60px;
+            height: 60px;
+        }
+
+        .cover-title {
+            font-size: 56px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 16px;
+            letter-spacing: -1px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .cover-subtitle {
+            font-size: 24px;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 48px;
+            font-weight: 400;
+        }
+
+        .cover-description {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 48px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .cover-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            color: white;
+            text-align: left;
+            margin-bottom: 24px;
+        }
+
+        .cover-feature {
+            display: flex;
+            align-items: start;
+            gap: 12px;
+        }
+
+        .cover-feature-icon {
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .cover-feature-text {
+            font-size: 15px;
+            line-height: 1.6;
+            opacity: 0.95;
+        }
+
+        .cover-stats {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            color: white;
+            margin-top: 32px;
+        }
+
+        .cover-stat {
+            text-align: center;
+        }
+
+        .cover-stat-number {
+            font-size: 36px;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .cover-stat-label {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .cover-start-btn {
+            background: white;
+            color: #667eea;
+            padding: 18px 48px;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            font-family: inherit;
+        }
+
+        .cover-start-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        .cover-footer {
+            margin-top: 40px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+        }
+
+        .disclaimer {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 24px;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 13px;
+            line-height: 1.6;
+            text-align: left;
+        }
+
+        .quiz-container {
+            display: none;
+        }
+
+        .quiz-container.active {
+            display: block;
+        }
+
+        .progress-container {
+            margin-bottom: 40px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e8eaed;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            width: 0%;
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .progress-text {
+            color: #5f6368;
+            font-size: 14px;
+            text-align: right;
+        }
+
+        .question-section {
+            display: none;
+        }
+
+        .question-section.active {
+            display: block;
+            animation: slideIn 0.4s ease-out;
+        }
+
+        .question-category {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 16px;
+            letter-spacing: 0.3px;
+        }
+
+        .question-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #202124;
+            margin-bottom: 32px;
+            line-height: 1.4;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .option {
+            background: #f8f9fa;
+            border: 2px solid #e8eaed;
+            border-radius: 12px;
+            padding: 20px 24px;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .option:hover {
+            border-color: #667eea;
+            background: #f5f6ff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+
+        .option.selected {
+            border-color: #667eea;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+        }
+
+        .option-radio {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #dadce0;
+            border-radius: 50%;
+            flex-shrink: 0;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+
+        .option.selected .option-radio {
+            border-color: #667eea;
+        }
+
+        .option.selected .option-radio::after {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #667eea;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .option-text {
+            font-size: 16px;
+            color: #202124;
+            line-height: 1.5;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            gap: 16px;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            flex: 1;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #5f6368;
+            border: 1px solid #dadce0;
+        }
+
+        .btn-secondary:hover {
+            background: #f8f9fa;
+            border-color: #667eea;
+        }
+
+        .result-section {
+            display: none;
+            text-align: center;
+        }
+
+        .result-section.active {
+            display: block;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .result-chart {
+            margin: 40px auto;
+            max-width: 500px;
+        }
+
+        .result-bar-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .result-label {
+            width: 100px;
+            text-align: right;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .result-label.dominant {
+            color: #dc2626;
+        }
+
+        .result-label.submissive {
+            color: #2563eb;
+        }
+
+        .result-bar {
+            flex: 1;
+            height: 40px;
+            background: #e8eaed;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .result-bar-fill {
+            height: 100%;
+            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 16px;
+            color: white;
+            font-weight: 600;
+        }
+
+        .result-bar-fill.dominant {
+            background: linear-gradient(90deg, #dc2626 0%, #ef4444 100%);
+        }
+
+        .result-bar-fill.submissive {
+            background: linear-gradient(90deg, #2563eb 0%, #3b82f6 100%);
+        }
+
+        .result-type {
+            font-size: 48px;
+            font-weight: 700;
+            margin: 30px 0 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .result-type-label {
+            font-size: 18px;
+            color: #5f6368;
+            margin-bottom: 30px;
+        }
+
+        .result-description {
+            font-size: 16px;
+            color: #5f6368;
+            line-height: 1.8;
+            margin: 30px 0;
+            text-align: left;
+            background: #f8f9fa;
+            padding: 24px;
+            border-radius: 12px;
+        }
+
+        .dimensions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .dimension-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 24px;
+            text-align: left;
+        }
+
+        .dimension-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #202124;
+            margin-bottom: 12px;
+        }
+
+        .dimension-score {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        .dimension-bar {
+            width: 100%;
+            height: 6px;
+            background: #e8eaed;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .dimension-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            border-radius: 3px;
+            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes coverFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes floatAnimation {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .card {
+                padding: 32px 24px;
+            }
+
+            .header h1 {
+                font-size: 32px;
+            }
+
+            .question-title {
+                font-size: 20px;
+            }
+
+            .dimensions {
+                grid-template-columns: 1fr;
+            }
+
+            .cover-title {
+                font-size: 36px;
+            }
+
+            .cover-subtitle {
+                font-size: 18px;
+            }
+
+            .cover-stats {
+                flex-direction: column;
+                gap: 24px;
+            }
+
+            .cover-features {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 封面页 -->
+    <div class="cover-page" id="coverPage">
+        <div class="cover-content">
+            <div class="cover-icon">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="url(#iconGradient)" stroke-width="2"/>
+                    <path d="M12 8V12L15 15" stroke="url(#iconGradient)" stroke-width="2" stroke-linecap="round"/>
+                    <defs>
+                        <linearGradient id="iconGradient" x1="2" y1="2" x2="22" y2="22">
+                            <stop offset="0%" style="stop-color:#667eea"/>
+                            <stop offset="100%" style="stop-color:#764ba2"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+
+            <h1 class="cover-title">BDSM人格测评</h1>
+            <p class="cover-subtitle">Dominance-Submission Personality Assessment</p>
+
+            <div class="cover-description">
+                <div class="cover-features">
+                    <div class="cover-feature">
+                        <svg class="cover-feature-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 11L12 14L22 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M21 12V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <div class="cover-feature-text">
+                            <strong>多维度评估</strong><br>基于心理学研究的专业测评
+                        </div>
+                    </div>
+                    <div class="cover-feature">
+                        <svg class="cover-feature-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="10" stroke="white" stroke-width="2"/>
+                            <path d="M12 6V12L16 14" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <div class="cover-feature-text">
+                            <strong>3-5分钟</strong><br>快速了解您的人格倾向
+                        </div>
+                    </div>
+                    <div class="cover-feature">
+                        <svg class="cover-feature-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <div class="cover-feature-text">
+                            <strong>科学分析</strong><br>获取专业的人格特质报告
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cover-stats">
+                    <div class="cover-stat">
+                        <span class="cover-stat-number">15</span>
+                        <span class="cover-stat-label">专业问题</span>
+                    </div>
+                    <div class="cover-stat">
+                        <span class="cover-stat-number">6</span>
+                        <span class="cover-stat-label">评估维度</span>
+                    </div>
+                    <div class="cover-stat">
+                        <span class="cover-stat-number">5</span>
+                        <span class="cover-stat-label">人格类型</span>
+                    </div>
+                </div>
+
+                <div class="disclaimer">
+                    <strong>⚠️ 声明：</strong>本测评基于性心理学与人格心理学研究，旨在帮助个体更好地了解自己的心理特质与偏好。测评结果仅供参考，不构成任何医学或心理诊断。请在成年人范围内使用，并尊重每个人的选择与边界。所有数据仅在本地处理，不会上传或存储。
+                </div>
+            </div>
+
+            <button class="cover-start-btn" onclick="startQuiz()">开始测评 Start Assessment</button>
+
+            <div class="cover-footer">
+                科学评估 · 专业分析 · 尊重隐私
+            </div>
+        </div>
+    </div>
+
+    <!-- 测评主体 -->
+    <div class="quiz-container" id="quizContainer">
+    <div class="container">
+        <div class="header">
+            <h1>BDSM人格测评</h1>
+            <p class="subtitle">Dominance-Submission Personality Assessment</p>
+        </div>
+
+        <div class="card">
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text"><span id="currentQuestion">0</span> / <span id="totalQuestions">0</span></div>
+            </div>
+
+            <div id="questionsContainer"></div>
+
+            <div class="result-section" id="resultSection">
+                <h2 style="font-size: 28px; margin-bottom: 20px; color: #202124;">您的人格特质报告</h2>
+                <p style="color: #5f6368; margin-bottom: 30px;">Personality Trait Assessment Report</p>
+
+                <div class="result-chart">
+                    <div class="result-bar-container">
+                        <div class="result-label dominant">支配型<br>Dominant</div>
+                        <div class="result-bar">
+                            <div class="result-bar-fill dominant" id="dominantBar" style="width: 0%">
+                                <span id="dominantScore">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="result-bar-container">
+                        <div class="result-label submissive">顺从型<br>Submissive</div>
+                        <div class="result-bar">
+                            <div class="result-bar-fill submissive" id="submissiveBar" style="width: 0%">
+                                <span id="submissiveScore">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="result-type" id="resultType"></div>
+                <div class="result-type-label" id="resultTypeLabel"></div>
+
+                <div class="result-description" id="resultDescription"></div>
+
+                <div class="dimensions" id="dimensionsContainer"></div>
+
+                <div class="button-container" style="margin-top: 40px;">
+                    <button class="btn btn-primary" onclick="location.reload()">重新测评 Retake Assessment</button>
+                </div>
+            </div>
+
+            <div class="button-container" id="navigationButtons">
+                <button class="btn btn-secondary" id="prevBtn" onclick="prevQuestion()">上一题</button>
+                <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>下一题</button>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script>
+        function startQuiz() {
+            document.getElementById('coverPage').style.display = 'none';
+            document.getElementById('quizContainer').classList.add('active');
+        }
+
+        const questions = [
+            {
+                category: "控制欲望 Control Desire",
+                dimension: "control",
+                question: "在亲密关系中，您更倾向于哪种角色？",
+                options: [
+                    { text: "我希望完全掌控局面，主导整个过程", score: 5, type: "dom" },
+                    { text: "我喜欢主导，但也愿意适度听取对方意见", score: 3, type: "dom" },
+                    { text: "我没有特别的偏好，顺其自然", score: 0, type: "neutral" },
+                    { text: "我更喜欢被引导，让对方做决定", score: 3, type: "sub" },
+                    { text: "我完全希望被对方掌控和支配", score: 5, type: "sub" }
+                ]
+            },
+            {
+                category: "权力动态 Power Dynamics",
+                dimension: "power",
+                question: "在日常生活中，您对权力关系的态度是？",
+                options: [
+                    { text: "我天生喜欢领导和指挥他人", score: 5, type: "dom" },
+                    { text: "我能够在需要时承担领导角色", score: 3, type: "dom" },
+                    { text: "我对权力关系没有特殊感觉", score: 0, type: "neutral" },
+                    { text: "我更舒适于跟随他人的引导", score: 3, type: "sub" },
+                    { text: "我喜欢服从和执行他人的指示", score: 5, type: "sub" }
+                ]
+            },
+            {
+                category: "责任承担 Responsibility",
+                dimension: "responsibility",
+                question: "在互动中，您对承担责任的态度如何？",
+                options: [
+                    { text: "我愿意为所有决定负全责", score: 5, type: "dom" },
+                    { text: "我可以承担主要责任", score: 3, type: "dom" },
+                    { text: "我希望责任由双方共同承担", score: 0, type: "neutral" },
+                    { text: "我更喜欢他人为我做决定", score: 3, type: "sub" },
+                    { text: "我完全不想承担决策责任", score: 5, type: "sub" }
+                ]
+            },
+            {
+                category: "规则制定 Rule Setting",
+                dimension: "rules",
+                question: "关于规则和界限，您的倾向是？",
+                options: [
+                    { text: "我喜欢制定规则并要求他人遵守", score: 5, type: "dom" },
+                    { text: "我会设定一些基本准则", score: 3, type: "dom" },
+                    { text: "我认为规则应该共同商定", score: 0, type: "neutral" },
+                    { text: "我更愿意遵守他人制定的规则", score: 3, type: "sub" },
+                    { text: "我享受严格遵守规则的感觉", score: 5, type: "sub" }
+                ]
+            },
+            {
+                category: "情绪表达 Emotional Expression",
+                dimension: "emotion",
+                question: "在情感交流中，您的表达方式是？",
+                options: [
+                    { text: "我倾向于保持强势和主导的姿态", score: 5, type: "dom" },
+                    { text: "我会展现自信但也有温柔的一面", score: 3, type: "dom" },
+                    { text: "我的情绪表达比较平衡", score: 0, type: "neutral" },
+                    { text: "我倾向于展现温顺和依赖的一面", score: 3, type: "sub" },
+                    { text: "我喜欢完全展现脆弱和服从", score: 5, type: "sub" }
+                ]
+            },
+            {
+                category: "信任建立 Trust Building",
+                dimension: "trust",
+                question: "在建立信任关系时，您的方式是？",
+                options: [
+                    { text: "我通过展示能力和可靠性赢得信任", score: 5, type: "dom" },
+                    { text: "我会主动建立信任基础", score: 3, type: "dom" },
+                    { text: "我认为信任需要相互建立", score: 0, type: "neutral" },
+                    { text: "我通过展现顺从来建立信任", score: 3, type: "sub" },
+                    { text: "我完全依赖对方建立信任", score: 5, type: "sub" }
+                ]
+            },
+            {
+                category: "奖惩机制 Reward & Discipline",
+                dimension: "discipline",
+                question: "您对奖惩机制的看法是？",
+                options: [
+                    { text: "我喜欢设定奖惩标准并执行", score: 5, type: "dom" },
+                    { text: "我认为适度的奖惩是必要的", score: 3, type: "dom" },
+                    { text: "我对奖惩没有特殊偏好", score: 0, type: "neutral" },
+                    { text: "我愿意接受合理的奖惩", score: 3, type: "sub" },
+                    { text: "我渴望被奖励或惩罚", score: 5, type: "sub" }
+                ]
+            },
+            {
+                category: "主动性 Initiative",
+                dimension: "initiative",
+                question: "在互动开始时，您通常如何表现？",
+                options: [
+                    { text: "我总是主动发起和引导", score: 5, type: "dom" },
+                    { text: "我经常会主动开始", score: 3, type: "dom" },
+                    { text: "我有时主动有时被动", score: 0, type: "neutral" },
+                    { text: "我更喜欢等待对方主动", score: 3, type: "sub" },
+                    { text: "我完全等待对方的引导", score: 5, type: "sub" }
+                ]
+            },
+            {
+                category: "边界设定 Boundary Setting",
+                dimension: "boundary",
+                question: "关于个人边界，您的态度是？",
+                options: [
+                    { text: "我清楚自己的边界并强势维护", score: 5, type: "dom" },
+                    { text: "我会明确表达自己的界限", score: 3, type: "dom" },
+                    { text: "我的边界比较灵活", score: 0, type: "neutral" },
+                    { text: "我愿意为对方调整边界", score: 3, type: "sub" },
+                    { text: "我希望对方为我设定边界", score: 5, type: "sub" }
+                ]
+            },
+            {
+                category: "沟通方式 Communication Style",
+                dimension: "communication",
+                question: "在沟通交流中，您的风格是？",
+                options: [
+                    { text: "我倾向于直接、坚定地表达要求", score: 5, type: "dom" },
+                    { text: "我会清晰地表达自己的想法", score: 3, type: "dom" },
+                    { text: "我的沟通方式比较平和", score: 0, type: "neutral" },
+                    { text: "我更倾向于委婉、顺从的表达", score: 3, type: "sub" },
+                    { text: "我习惯用恭顺的方式沟通", score: 5, type: "sub" }
+                ]
+            },
+            {
+                category: "决策模式 Decision Making",
+                dimension: "decision",
+                question: "在需要做决定时，您的方式是？",
+                options: [
+                    { text: "我迅速果断地做出决定", score: 5, type: "dom" },
+                    { text: "我能够自信地做出选择", score: 3, type: "dom" },
+                    { text: "我会考虑多方意见后决定", score: 0, type: "neutral" },
+                    { text: "我倾向于征询他人意见", score: 3, type: "sub" },
+                    { text: "我希望他人为我做决定", score: 5, type: "sub" }
+                ]
+            },
+            {
+                category: "冲突处理 Conflict Resolution",
+                dimension: "conflict",
+                question: "面对分歧或冲突时，您会如何应对？",
+                options: [
+                    { text: "我会坚持自己的立场并说服对方", score: 5, type: "dom" },
+                    { text: "我会主导寻找解决方案", score: 3, type: "dom" },
+                    { text: "我会寻求双方都能接受的方案", score: 0, type: "neutral" },
+                    { text: "我倾向于妥协和让步", score: 3, type: "sub" },
+                    { text: "我会完全服从对方的决定", score: 5, type: "sub" }
+                ]
+            },
+            {
+                category: "照料角色 Care Role",
+                dimension: "care",
+                question: "在关系中，您倾向于扮演什么照料角色？",
+                options: [
+                    { text: "我喜欢照顾、保护和指导对方", score: 5, type: "dom" },
+                    { text: "我愿意承担照顾者的角色", score: 3, type: "dom" },
+                    { text: "我认为应该相互照顾", score: 0, type: "neutral" },
+                    { text: "我享受被照顾和保护的感觉", score: 3, type: "sub" },
+                    { text: "我完全依赖对方的照料", score: 5, type: "sub" }
+                ]
+            },
+            {
+                category: "自主性 Autonomy",
+                dimension: "autonomy",
+                question: "关于个人自主权，您的看法是？",
+                options: [
+                    { text: "我坚持拥有完全的自主决定权", score: 5, type: "dom" },
+                    { text: "我重视自己的独立性", score: 3, type: "dom" },
+                    { text: "我在自主与合作之间平衡", score: 0, type: "neutral" },
+                    { text: "我愿意让渡部分自主权", score: 3, type: "sub" },
+                    { text: "我喜欢将自主权交给对方", score: 5, type: "sub" }
+                ]
+            },
+            {
+                category: "满足感来源 Satisfaction Source",
+                dimension: "satisfaction",
+                question: "什么能给您带来最大的满足感？",
+                options: [
+                    { text: "看到对方服从我的引导", score: 5, type: "dom" },
+                    { text: "成功主导一段关系", score: 3, type: "dom" },
+                    { text: "双方平等互动的和谐", score: 0, type: "neutral" },
+                    { text: "满足对方的期待", score: 3, type: "sub" },
+                    { text: "完全顺从对方的意愿", score: 5, type: "sub" }
+                ]
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let answers = [];
+
+        function initQuiz() {
+            document.getElementById('totalQuestions').textContent = questions.length;
+            renderQuestions();
+            showQuestion(0);
+            updateProgress();
+        }
+
+        function renderQuestions() {
+            const container = document.getElementById('questionsContainer');
+            questions.forEach((q, index) => {
+                const section = document.createElement('div');
+                section.className = 'question-section';
+                section.id = `question-${index}`;
+
+                section.innerHTML = `
+                    <div class="question-category">${q.category}</div>
+                    <h3 class="question-title">${q.question}</h3>
+                    <div class="options">
+                        ${q.options.map((opt, optIndex) => `
+                            <div class="option" onclick="selectOption(${index}, ${optIndex}, ${opt.score}, '${opt.type}')">
+                                <div class="option-radio"></div>
+                                <div class="option-text">${opt.text}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+
+                container.appendChild(section);
+            });
+        }
+
+        function showQuestion(index) {
+            document.querySelectorAll('.question-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(`question-${index}`).classList.add('active');
+
+            updateButtons();
+            updateProgress();
+        }
+
+        function selectOption(questionIndex, optionIndex, score, type) {
+            const questionElement = document.getElementById(`question-${questionIndex}`);
+            questionElement.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+            questionElement.querySelectorAll('.option')[optionIndex].classList.add('selected');
+
+            answers[questionIndex] = {
+                dimension: questions[questionIndex].dimension,
+                score: score,
+                type: type
+            };
+
+            updateButtons();
+        }
+
+        function updateButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+
+            prevBtn.disabled = currentQuestionIndex === 0;
+            nextBtn.disabled = !answers[currentQuestionIndex];
+
+            if (currentQuestionIndex === questions.length - 1) {
+                nextBtn.textContent = '查看结果';
+            } else {
+                nextBtn.textContent = '下一题';
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex < questions.length - 1) {
+                currentQuestionIndex++;
+                showQuestion(currentQuestionIndex);
+            } else {
+                showResults();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                showQuestion(currentQuestionIndex);
+            }
+        }
+
+        function calculateScores() {
+            let domScore = 0;
+            let subScore = 0;
+            let neutralScore = 0;
+
+            const dimensionScores = {};
+
+            answers.forEach(answer => {
+                if (answer.type === 'dom') {
+                    domScore += answer.score;
+                } else if (answer.type === 'sub') {
+                    subScore += answer.score;
+                } else {
+                    neutralScore += 1;
+                }
+
+                if (!dimensionScores[answer.dimension]) {
+                    dimensionScores[answer.dimension] = { dom: 0, sub: 0 };
+                }
+
+                if (answer.type === 'dom') {
+                    dimensionScores[answer.dimension].dom += answer.score;
+                } else if (answer.type === 'sub') {
+                    dimensionScores[answer.dimension].sub += answer.score;
+                }
+            });
+
+            const totalScore = domScore + subScore;
+            const domPercentage = totalScore > 0 ? Math.round((domScore / totalScore) * 100) : 50;
+            const subPercentage = totalScore > 0 ? Math.round((subScore / totalScore) * 100) : 50;
+
+            return {
+                domScore,
+                subScore,
+                neutralScore,
+                domPercentage,
+                subPercentage,
+                dimensionScores
+            };
+        }
+
+        function showResults() {
+            document.getElementById('questionsContainer').style.display = 'none';
+            document.getElementById('navigationButtons').style.display = 'none';
+            document.getElementById('progressFill').style.width = '100%';
+
+            const scores = calculateScores();
+
+            setTimeout(() => {
+                document.getElementById('resultSection').classList.add('active');
+                displayResults(scores);
+            }, 300);
+        }
+
+        function displayResults(scores) {
+            // 显示百分比条
+            setTimeout(() => {
+                document.getElementById('dominantBar').style.width = scores.domPercentage + '%';
+                document.getElementById('dominantScore').textContent = scores.domPercentage + '%';
+                document.getElementById('submissiveBar').style.width = scores.subPercentage + '%';
+                document.getElementById('submissiveScore').textContent = scores.subPercentage + '%';
+            }, 500);
+
+            // 确定类型
+            let type, typeLabel, description;
+            const diff = Math.abs(scores.domPercentage - scores.subPercentage);
+
+            if (diff < 10) {
+                type = 'Switch 转换型';
+                typeLabel = 'Versatile Personality';
+                description = '您展现出灵活多变的人格特质。您能够根据情境和对象在支配型与顺从型之间自如切换，这种适应能力使您能够在不同的关系动态中找到舒适的位置。您既能享受主导的快感，也能体验被引导的愉悦。这种平衡的特质让您在关系中具有很强的兼容性和包容性。建议您在实践中保持开放的心态，根据实际情况选择最适合的角色定位。';
+            } else if (scores.domPercentage > scores.subPercentage) {
+                if (scores.domPercentage >= 75) {
+                    type = 'Dominant 强支配型';
+                    typeLabel = 'Strong Dominant Personality';
+                    description = '您具有非常明显的支配型人格特质。您天生喜欢掌控局面，在关系中倾向于担任领导和指引的角色。您享受制定规则、做出决策并看到他人服从您的引导。您的自信、果断和责任感使您成为天然的主导者。在关系中，您需要确保尊重对方的边界和意愿，建立基于信任和安全的互动模式。记住，真正的支配不是单纯的控制，而是通过关怀和保护来展现力量。';
+                } else {
+                    type = 'Dominant Leaning 偏支配型';
+                    typeLabel = 'Dominant-Leaning Personality';
+                    description = '您倾向于支配型人格，但同时保持一定的灵活性。您喜欢在关系中占据主导地位，但也愿意倾听和考虑对方的想法。您能够承担领导责任，但不会过分强势。这种相对温和的支配风格让您更容易与不同类型的伙伴建立和谐关系。建议您继续发展自己的领导能力，同时保持对对方需求的敏感度。';
+                }
+            } else {
+                if (scores.subPercentage >= 75) {
+                    type = 'Submissive 强顺从型';
+                    typeLabel = 'Strong Submissive Personality';
+                    description = '您具有非常明显的顺从型人格特质。您在关系中倾向于服从和跟随，享受被引导、被照顾的感觉。您愿意让渡控制权，信任对方为您做出决定。您的温顺、顺从和对他人需求的敏感使您成为理想的追随者。在关系中，您需要寻找值得信任、负责任的伙伴，同时也要学会表达自己的真实需求和边界。记住，真正的顺从是基于自愿和信任，而不是无条件的服从。';
+                } else {
+                    type = 'Submissive Leaning 偏顺从型';
+                    typeLabel = 'Submissive-Leaning Personality';
+                    description = '您倾向于顺从型人格，但同时保持一定的自主性。您喜欢在关系中被引导和照顾，但也会在必要时表达自己的想法和需求。您享受服从带来的安全感，但不会完全放弃自我。这种相对独立的顺从风格让您能够在保持自我的同时享受被支配的快感。建议您继续探索自己舒适的服从边界，同时培养与主导者的良好沟通。';
+                }
+            }
+
+            document.getElementById('resultType').textContent = type;
+            document.getElementById('resultTypeLabel').textContent = typeLabel;
+            document.getElementById('resultDescription').textContent = description;
+
+            // 显示维度分析
+            displayDimensions(scores.dimensionScores);
+        }
+
+        function displayDimensions(dimensionScores) {
+            const container = document.getElementById('dimensionsContainer');
+            const dimensionNames = {
+                control: '控制欲望\nControl Desire',
+                power: '权力动态\nPower Dynamics',
+                responsibility: '责任承担\nResponsibility',
+                rules: '规则制定\nRule Setting',
+                emotion: '情绪表达\nEmotional Expression',
+                trust: '信任建立\nTrust Building',
+                discipline: '奖惩机制\nReward & Discipline',
+                initiative: '主动性\nInitiative',
+                boundary: '边界设定\nBoundary Setting',
+                communication: '沟通方式\nCommunication Style',
+                decision: '决策模式\nDecision Making',
+                conflict: '冲突处理\nConflict Resolution',
+                care: '照料角色\nCare Role',
+                autonomy: '自主性\nAutonomy',
+                satisfaction: '满足感来源\nSatisfaction Source'
+            };
+
+            for (let dim in dimensionScores) {
+                const dimData = dimensionScores[dim];
+                const total = dimData.dom + dimData.sub;
+                const percentage = total > 0 ? Math.round((dimData.dom / total) * 100) : 50;
+
+                let tendency;
+                if (percentage >= 70) {
+                    tendency = '强支配倾向';
+                } else if (percentage >= 55) {
+                    tendency = '偏支配倾向';
+                } else if (percentage >= 45) {
+                    tendency = '平衡状态';
+                } else if (percentage >= 30) {
+                    tendency = '偏顺从倾向';
+                } else {
+                    tendency = '强顺从倾向';
+                }
+
+                const card = document.createElement('div');
+                card.className = 'dimension-card';
+                card.innerHTML = `
+                    <div class="dimension-title">${dimensionNames[dim].replace('\n', '<br>')}</div>
+                    <div class="dimension-score">${tendency}</div>
+                    <div class="dimension-bar">
+                        <div class="dimension-bar-fill" style="width: 0%"></div>
+                    </div>
+                `;
+                container.appendChild(card);
+
+                setTimeout(() => {
+                    card.querySelector('.dimension-bar-fill').style.width = percentage + '%';
+                }, 500);
+            }
+        }
+
+        window.onload = initQuiz;
+    </script>
+</body>
+</html>
