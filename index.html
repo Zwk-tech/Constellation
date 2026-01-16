@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BDSM人格测评 | Dominance-Submission Personality Assessment</title>
+    <title>专业星座分析系统 | Professional Astrology Analysis System</title>
     <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -16,538 +16,53 @@
             font-family: 'Noto Sans SC', 'Google Sans', -apple-system, BlinkMacSystemFont, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            padding: 20px;
             color: #202124;
+            overflow-x: hidden;
         }
 
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .header {
-            text-align: center;
-            color: white;
-            margin-bottom: 40px;
-            animation: fadeInDown 0.6s ease-out;
-        }
-
-        .header h1 {
-            font-size: 42px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            letter-spacing: -0.5px;
-        }
-
-        .header .subtitle {
-            font-size: 18px;
-            opacity: 0.95;
-            font-weight: 400;
-        }
-
-        .card {
-            background: white;
-            border-radius: 16px;
-            padding: 48px;
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
-            margin-bottom: 20px;
-            animation: fadeInUp 0.6s ease-out;
-        }
-
-        /* 封面页样式 */
+        /* ========== 封面页样式 ========== */
         .cover-page {
             display: flex;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            padding: 20px;
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        .cover-page.hidden {
+            display: none;
+        }
+
+        /* 星空背景 */
+        .starfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.6;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
         }
 
         .cover-content {
             text-align: center;
-            max-width: 800px;
+            max-width: 900px;
+            position: relative;
+            z-index: 1;
             animation: coverFadeIn 1s ease-out;
-        }
-
-        .cover-icon {
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 40px;
-            background: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-            animation: floatAnimation 3s ease-in-out infinite;
-        }
-
-        .cover-icon svg {
-            width: 60px;
-            height: 60px;
-        }
-
-        .cover-title {
-            font-size: 56px;
-            font-weight: 700;
-            color: white;
-            margin-bottom: 16px;
-            letter-spacing: -1px;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .cover-subtitle {
-            font-size: 24px;
-            color: rgba(255, 255, 255, 0.95);
-            margin-bottom: 48px;
-            font-weight: 400;
-        }
-
-        .cover-description {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
-            padding: 32px;
-            margin-bottom: 48px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .cover-features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 24px;
-            color: white;
-            text-align: left;
-            margin-bottom: 24px;
-        }
-
-        .cover-feature {
-            display: flex;
-            align-items: start;
-            gap: 12px;
-        }
-
-        .cover-feature-icon {
-            width: 24px;
-            height: 24px;
-            flex-shrink: 0;
-            margin-top: 2px;
-        }
-
-        .cover-feature-text {
-            font-size: 15px;
-            line-height: 1.6;
-            opacity: 0.95;
-        }
-
-        .cover-stats {
-            display: flex;
-            justify-content: center;
-            gap: 48px;
-            color: white;
-            margin-top: 32px;
-        }
-
-        .cover-stat {
-            text-align: center;
-        }
-
-        .cover-stat-number {
-            font-size: 36px;
-            font-weight: 700;
-            display: block;
-            margin-bottom: 8px;
-        }
-
-        .cover-stat-label {
-            font-size: 14px;
-            opacity: 0.9;
-        }
-
-        .cover-start-btn {
-            background: white;
-            color: #667eea;
-            padding: 18px 48px;
-            border: none;
-            border-radius: 50px;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-            font-family: inherit;
-        }
-
-        .cover-start-btn:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
-        }
-
-        .cover-footer {
-            margin-top: 40px;
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 14px;
-        }
-
-        .disclaimer {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 20px;
-            margin-top: 24px;
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 13px;
-            line-height: 1.6;
-            text-align: left;
-        }
-
-        .quiz-container {
-            display: none;
-        }
-
-        .quiz-container.active {
-            display: block;
-        }
-
-        .progress-container {
-            margin-bottom: 40px;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: #e8eaed;
-            border-radius: 4px;
-            overflow: hidden;
-            margin-bottom: 12px;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-            width: 0%;
-            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .progress-text {
-            color: #5f6368;
-            font-size: 14px;
-            text-align: right;
-        }
-
-        .question-section {
-            display: none;
-        }
-
-        .question-section.active {
-            display: block;
-            animation: slideIn 0.4s ease-out;
-        }
-
-        .question-category {
-            display: inline-block;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 500;
-            margin-bottom: 16px;
-            letter-spacing: 0.3px;
-        }
-
-        .question-title {
-            font-size: 24px;
-            font-weight: 600;
-            color: #202124;
-            margin-bottom: 32px;
-            line-height: 1.4;
-        }
-
-        .options {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .option {
-            background: #f8f9fa;
-            border: 2px solid #e8eaed;
-            border-radius: 12px;
-            padding: 20px 24px;
-            cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .option:hover {
-            border-color: #667eea;
-            background: #f5f6ff;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
-        }
-
-        .option.selected {
-            border-color: #667eea;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
-        }
-
-        .option-radio {
-            width: 20px;
-            height: 20px;
-            border: 2px solid #dadce0;
-            border-radius: 50%;
-            flex-shrink: 0;
-            position: relative;
-            transition: all 0.2s ease;
-        }
-
-        .option.selected .option-radio {
-            border-color: #667eea;
-        }
-
-        .option.selected .option-radio::after {
-            content: '';
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background: #667eea;
-            border-radius: 50%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        .option-text {
-            font-size: 16px;
-            color: #202124;
-            line-height: 1.5;
-        }
-
-        .button-container {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 40px;
-            gap: 16px;
-        }
-
-        .btn {
-            padding: 14px 32px;
-            border: none;
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            font-family: inherit;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            flex: 1;
-        }
-
-        .btn-primary:hover:not(:disabled) {
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
-            transform: translateY(-2px);
-        }
-
-        .btn-primary:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .btn-secondary {
-            background: white;
-            color: #5f6368;
-            border: 1px solid #dadce0;
-        }
-
-        .btn-secondary:hover {
-            background: #f8f9fa;
-            border-color: #667eea;
-        }
-
-        .result-section {
-            display: none;
-            text-align: center;
-        }
-
-        .result-section.active {
-            display: block;
-            animation: fadeIn 0.6s ease-out;
-        }
-
-        .result-chart {
-            margin: 40px auto;
-            max-width: 500px;
-        }
-
-        .result-bar-container {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .result-label {
-            width: 100px;
-            text-align: right;
-            font-weight: 600;
-            font-size: 16px;
-        }
-
-        .result-label.dominant {
-            color: #dc2626;
-        }
-
-        .result-label.submissive {
-            color: #2563eb;
-        }
-
-        .result-bar {
-            flex: 1;
-            height: 40px;
-            background: #e8eaed;
-            border-radius: 20px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .result-bar-fill {
-            height: 100%;
-            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            padding-right: 16px;
-            color: white;
-            font-weight: 600;
-        }
-
-        .result-bar-fill.dominant {
-            background: linear-gradient(90deg, #dc2626 0%, #ef4444 100%);
-        }
-
-        .result-bar-fill.submissive {
-            background: linear-gradient(90deg, #2563eb 0%, #3b82f6 100%);
-        }
-
-        .result-type {
-            font-size: 48px;
-            font-weight: 700;
-            margin: 30px 0 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .result-type-label {
-            font-size: 18px;
-            color: #5f6368;
-            margin-bottom: 30px;
-        }
-
-        .result-description {
-            font-size: 16px;
-            color: #5f6368;
-            line-height: 1.8;
-            margin: 30px 0;
-            text-align: left;
-            background: #f8f9fa;
-            padding: 24px;
-            border-radius: 12px;
-        }
-
-        .dimensions {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 40px;
-        }
-
-        .dimension-card {
-            background: #f8f9fa;
-            border-radius: 12px;
-            padding: 24px;
-            text-align: left;
-        }
-
-        .dimension-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: #202124;
-            margin-bottom: 12px;
-        }
-
-        .dimension-score {
-            font-size: 32px;
-            font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 8px;
-        }
-
-        .dimension-bar {
-            width: 100%;
-            height: 6px;
-            background: #e8eaed;
-            border-radius: 3px;
-            overflow: hidden;
-        }
-
-        .dimension-bar-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-            border-radius: 3px;
-            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
         }
 
         @keyframes coverFadeIn {
@@ -561,32 +76,971 @@
             }
         }
 
+        .cover-icon {
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 40px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            animation: floatAnimation 3s ease-in-out infinite;
+            font-size: 70px;
+        }
+
         @keyframes floatAnimation {
-            0%, 100% {
-                transform: translateY(0px);
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .cover-title {
+            font-size: 56px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 16px;
+            letter-spacing: -1px;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .cover-subtitle {
+            font-size: 24px;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 48px;
+            font-weight: 400;
+        }
+
+        .cover-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .cover-feature {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .cover-feature:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-4px);
+        }
+
+        .cover-feature-icon {
+            font-size: 36px;
+            margin-bottom: 12px;
+        }
+
+        .cover-feature-text {
+            font-size: 16px;
+            color: white;
+            font-weight: 500;
+        }
+
+        .cover-stats {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            margin-bottom: 48px;
+        }
+
+        .cover-stat {
+            text-align: center;
+        }
+
+        .cover-stat-number {
+            font-size: 48px;
+            font-weight: 700;
+            color: white;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .cover-stat-label {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .cover-start-btn {
+            background: white;
+            color: #667eea;
+            padding: 20px 60px;
+            border: none;
+            border-radius: 60px;
+            font-size: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            font-family: inherit;
+        }
+
+        .cover-start-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .cover-footer {
+            margin-top: 40px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+        }
+
+        /* ========== 输入页样式 ========== */
+        .input-page {
+            display: none;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .input-page.active {
+            display: block;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 48px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
             }
-            50% {
-                transform: translateY(-10px);
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
 
+        .progress-container {
+            margin-bottom: 40px;
+        }
+
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .progress-step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+
+        .progress-step::after {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            width: 100%;
+            height: 2px;
+            background: #e8eaed;
+            z-index: -1;
+        }
+
+        .progress-step:last-child::after {
+            display: none;
+        }
+
+        .progress-step-circle {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #e8eaed;
+            color: #5f6368;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .progress-step.active .progress-step-circle {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .progress-step.completed .progress-step-circle {
+            background: #34a853;
+            color: white;
+        }
+
+        .progress-step-label {
+            font-size: 13px;
+            color: #5f6368;
+        }
+
+        .input-step {
+            display: none;
+        }
+
+        .input-step.active {
+            display: block;
+            animation: slideIn 0.4s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .step-title {
+            font-size: 28px;
+            font-weight: 600;
+            color: #202124;
+            margin-bottom: 12px;
+        }
+
+        .step-subtitle {
+            font-size: 16px;
+            color: #5f6368;
+            margin-bottom: 32px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 15px;
+            font-weight: 500;
+            color: #202124;
+            margin-bottom: 8px;
+        }
+
+        .form-label .required {
+            color: #ea4335;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e8eaed;
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: inherit;
+            transition: all 0.2s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-hint {
+            display: block;
+            font-size: 13px;
+            color: #5f6368;
+            margin-top: 6px;
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e8eaed;
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: inherit;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .form-select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        .option-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .option-card {
+            background: #f8f9fa;
+            border: 2px solid #e8eaed;
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option-card:hover {
+            border-color: #667eea;
+            background: #f5f6ff;
+            transform: translateY(-2px);
+        }
+
+        .option-card.selected {
+            border-color: #667eea;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+        }
+
+        .option-card-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+
+        .option-card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #202124;
+            margin-bottom: 8px;
+        }
+
+        .option-card-desc {
+            font-size: 13px;
+            color: #5f6368;
+        }
+
+        .checkbox-option {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            background: #f8f9fa;
+            border: 2px solid #e8eaed;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-bottom: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .checkbox-option:hover {
+            border-color: #667eea;
+            background: #f5f6ff;
+        }
+
+        .checkbox-option input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
+            cursor: pointer;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            margin-top: 40px;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #5f6368;
+            border: 2px solid #e8eaed;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: #e8eaed;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            flex: 1;
+            min-width: 200px;
+            position: relative;
+            z-index: 100;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .partner-info {
+            display: none;
+            margin-top: 24px;
+        }
+
+        .partner-info.active {
+            display: block;
+            animation: fadeInUp 0.4s ease-out;
+        }
+
+        /* ========== 结果页样式 ========== */
+        .result-page {
+            display: none;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .result-page.active {
+            display: block;
+        }
+
+        .result-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .zodiac-badge {
+            text-align: center;
+            margin-bottom: 48px;
+            animation: badgeAppear 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes badgeAppear {
+            0% {
+                opacity: 0;
+                transform: scale(0) rotate(-180deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        .zodiac-symbol {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        .zodiac-name {
+            font-size: 42px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 8px;
+        }
+
+        .zodiac-dates {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .big-three {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+
+        .sign-card {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            text-align: center;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .sign-card:nth-child(2) { animation-delay: 0.1s; }
+        .sign-card:nth-child(3) { animation-delay: 0.2s; }
+
+        .sign-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.15);
+        }
+
+        .sign-card-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+
+        .sign-card-label {
+            font-size: 13px;
+            color: #5f6368;
+            margin-bottom: 8px;
+        }
+
+        .sign-card-name {
+            font-size: 24px;
+            font-weight: 600;
+            color: #202124;
+            margin-bottom: 8px;
+        }
+
+        .sign-card-meaning {
+            font-size: 14px;
+            color: #5f6368;
+        }
+
+        .dimensions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+
+        .dimension-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .dimension-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.15);
+        }
+
+        .dimension-card-header {
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+        }
+
+        .dimension-card-icon {
+            font-size: 32px;
+            flex-shrink: 0;
+        }
+
+        .dimension-card-title {
+            flex: 1;
+            font-size: 18px;
+            font-weight: 600;
+            color: #202124;
+        }
+
+        .dimension-card-score {
+            font-size: 20px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .dimension-card-body {
+            padding: 24px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .dimension-card-body.expanded {
+            max-height: 1000px;
+        }
+
+        .dimension-content {
+            font-size: 15px;
+            line-height: 1.8;
+            color: #5f6368;
+            margin-bottom: 16px;
+        }
+
+        .dimension-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .dimension-tag {
+            padding: 6px 12px;
+            background: #f8f9fa;
+            border-radius: 16px;
+            font-size: 13px;
+            color: #5f6368;
+        }
+
+        .section-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: white;
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .result-actions {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 48px;
+            position: relative;
+            z-index: 10;
+            padding: 24px 0;
+        }
+
+        /* ========== 配对分析样式 ========== */
+        #compatibilitySection,
+        #fortuneSection {
+            margin-top: 48px;
+        }
+
+        .compatibility-container {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.15);
+        }
+
+        .compatibility-signs {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .compatibility-sign {
+            text-align: center;
+        }
+
+        .compatibility-sign-symbol {
+            font-size: 48px;
+            margin-bottom: 8px;
+        }
+
+        .compatibility-sign-name {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .compatibility-heart {
+            font-size: 36px;
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            50% { transform: scale(1); }
+        }
+
+        .compatibility-score-section {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+
+        .compatibility-circle {
+            transform: rotate(-90deg);
+        }
+
+        .compatibility-circle-progress {
+            transition: stroke-dashoffset 1s ease;
+        }
+
+        .compatibility-score-value {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            font-size: 32px;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .compatibility-score-unit {
+            font-size: 16px;
+            font-weight: 400;
+        }
+
+        .compatibility-level {
+            text-align: center;
+            padding: 12px 24px;
+            border-radius: 24px;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .compatibility-level.perfect {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .compatibility-level.great {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .compatibility-level.good {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+
+        .compatibility-level.challenging {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            color: white;
+        }
+
+        .compatibility-analysis {
+            line-height: 1.8;
+            color: #666;
+        }
+
+        .compatibility-analysis p {
+            margin-bottom: 16px;
+        }
+
+        .compatibility-details {
+            margin-top: 24px;
+        }
+
+        .compatibility-detail-item {
+            margin-bottom: 12px;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #667eea;
+            margin-right: 8px;
+        }
+
+        .detail-value {
+            color: #666;
+        }
+
+        /* ========== 运势预测样式 ========== */
+        .fortune-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .fortune-tab {
+            padding: 12px 32px;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 24px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .fortune-tab:hover {
+            background: #f8f9fa;
+        }
+
+        .fortune-tab.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: transparent;
+        }
+
+        .fortune-tab-content {
+            display: none;
+        }
+
+        .fortune-tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .fortune-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .fortune-header h3 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .fortune-date-range {
+            font-size: 16px;
+            color: #999;
+        }
+
+        .fortune-overall {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 32px;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.15);
+            text-align: center;
+        }
+
+        .fortune-score-circle {
+            display: inline-block;
+            margin-bottom: 16px;
+        }
+
+        .fortune-score-value {
+            font-size: 48px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .fortune-score-label {
+            font-size: 14px;
+            color: #999;
+            margin-top: 4px;
+        }
+
+        .fortune-trend {
+            margin-bottom: 16px;
+        }
+
+        .trend-label {
+            color: #666;
+            font-weight: 600;
+        }
+
+        .trend-value {
+            font-weight: 700;
+            margin-left: 8px;
+        }
+
+        .trend-value.up {
+            color: #52c41a;
+        }
+
+        .trend-value.stable {
+            color: #1890ff;
+        }
+
+        .fortune-summary {
+            color: #666;
+            line-height: 1.8;
+            text-align: left;
+        }
+
+        .fortune-dimensions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .fortune-dimension {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.15);
+        }
+
+        .fortune-dimension-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .fortune-dimension-icon {
+            font-size: 24px;
+            margin-right: 8px;
+        }
+
+        .fortune-dimension-title {
+            flex: 1;
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .fortune-dimension-score {
+            font-size: 18px;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .fortune-dimension-bar {
+            width: 100%;
+            height: 8px;
+            background: #f0f0f0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+
+        .fortune-dimension-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            border-radius: 4px;
+            transition: width 1s ease;
+        }
+
+        .fortune-dimension-content {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+
+        .fortune-dimension-advice {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .advice-tag {
+            display: inline-block;
+            padding: 6px 12px;
+            background: #f8f9fa;
+            border-radius: 16px;
+            font-size: 13px;
+            color: #666;
+        }
+
+        /* ========== 响应式设计 ========== */
         @media (max-width: 768px) {
-            .card {
-                padding: 32px 24px;
-            }
-
-            .header h1 {
-                font-size: 32px;
-            }
-
-            .question-title {
-                font-size: 20px;
-            }
-
-            .dimensions {
-                grid-template-columns: 1fr;
-            }
-
             .cover-title {
                 font-size: 36px;
             }
@@ -595,596 +1049,1444 @@
                 font-size: 18px;
             }
 
+            .cover-features {
+                grid-template-columns: 1fr;
+            }
+
             .cover-stats {
                 flex-direction: column;
                 gap: 24px;
             }
 
-            .cover-features {
+            .card {
+                padding: 32px 24px;
+            }
+
+            .step-title {
+                font-size: 24px;
+            }
+
+            .option-cards {
                 grid-template-columns: 1fr;
+            }
+
+            .big-three {
+                grid-template-columns: 1fr;
+            }
+
+            .dimensions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .button-container {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .compatibility-container {
+                padding: 24px 16px;
+            }
+
+            .compatibility-signs {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .compatibility-heart {
+                transform: rotate(90deg);
+            }
+
+            .fortune-tabs {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .fortune-tab {
+                width: 100%;
+            }
+
+            .fortune-dimensions {
+                grid-template-columns: 1fr;
+            }
+
+            .fortune-overall {
+                padding: 24px 16px;
             }
         }
     </style>
 </head>
 <body>
+    <!-- 星空背景 -->
+    <div class="starfield" id="starfield"></div>
+
     <!-- 封面页 -->
     <div class="cover-page" id="coverPage">
         <div class="cover-content">
-            <div class="cover-icon">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="url(#iconGradient)" stroke-width="2"/>
-                    <path d="M12 8V12L15 15" stroke="url(#iconGradient)" stroke-width="2" stroke-linecap="round"/>
-                    <defs>
-                        <linearGradient id="iconGradient" x1="2" y1="2" x2="22" y2="22">
-                            <stop offset="0%" style="stop-color:#667eea"/>
-                            <stop offset="100%" style="stop-color:#764ba2"/>
-                        </linearGradient>
-                    </defs>
-                </svg>
-            </div>
+            <div class="cover-icon">✨</div>
+            <h1 class="cover-title">专业星座分析系统</h1>
+            <p class="cover-subtitle">探索你的星座密码，发现真实的自己</p>
 
-            <h1 class="cover-title">BDSM人格测评</h1>
-            <p class="cover-subtitle">Dominance-Submission Personality Assessment</p>
-
-            <div class="cover-description">
-                <div class="cover-features">
-                    <div class="cover-feature">
-                        <svg class="cover-feature-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M9 11L12 14L22 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M21 12V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        <div class="cover-feature-text">
-                            <strong>多维度评估</strong><br>基于心理学研究的专业测评
-                        </div>
-                    </div>
-                    <div class="cover-feature">
-                        <svg class="cover-feature-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="12" cy="12" r="10" stroke="white" stroke-width="2"/>
-                            <path d="M12 6V12L16 14" stroke="white" stroke-width="2" stroke-linecap="round"/>
-                        </svg>
-                        <div class="cover-feature-text">
-                            <strong>3-5分钟</strong><br>快速了解您的人格倾向
-                        </div>
-                    </div>
-                    <div class="cover-feature">
-                        <svg class="cover-feature-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        <div class="cover-feature-text">
-                            <strong>科学分析</strong><br>获取专业的人格特质报告
-                        </div>
-                    </div>
+            <div class="cover-features">
+                <div class="cover-feature">
+                    <div class="cover-feature-icon">☉☽↗</div>
+                    <div class="cover-feature-text">精准计算太阳/月亮/上升星座</div>
                 </div>
-
-                <div class="cover-stats">
-                    <div class="cover-stat">
-                        <span class="cover-stat-number">15</span>
-                        <span class="cover-stat-label">专业问题</span>
-                    </div>
-                    <div class="cover-stat">
-                        <span class="cover-stat-number">6</span>
-                        <span class="cover-stat-label">评估维度</span>
-                    </div>
-                    <div class="cover-stat">
-                        <span class="cover-stat-number">5</span>
-                        <span class="cover-stat-label">人格类型</span>
-                    </div>
+                <div class="cover-feature">
+                    <div class="cover-feature-icon">📊</div>
+                    <div class="cover-feature-text">12维度深度性格分析</div>
                 </div>
-
-                <div class="disclaimer">
-                    <strong>⚠️ 声明：</strong>本测评基于性心理学与人格心理学研究，旨在帮助个体更好地了解自己的心理特质与偏好。测评结果仅供参考，不构成任何医学或心理诊断。请在成年人范围内使用，并尊重每个人的选择与边界。所有数据仅在本地处理，不会上传或存储。
+                <div class="cover-feature">
+                    <div class="cover-feature-icon">💑</div>
+                    <div class="cover-feature-text">144种星座配对解析</div>
+                </div>
+                <div class="cover-feature">
+                    <div class="cover-feature-icon">🔮</div>
+                    <div class="cover-feature-text">本周/本月运势预测</div>
                 </div>
             </div>
 
-            <button class="cover-start-btn" onclick="startQuiz()">开始测评 Start Assessment</button>
+            <div class="cover-stats">
+                <div class="cover-stat">
+                    <span class="cover-stat-number">12</span>
+                    <span class="cover-stat-label">星座</span>
+                </div>
+                <div class="cover-stat">
+                    <span class="cover-stat-number">144</span>
+                    <span class="cover-stat-label">配对组合</span>
+                </div>
+                <div class="cover-stat">
+                    <span class="cover-stat-number">12</span>
+                    <span class="cover-stat-label">分析维度</span>
+                </div>
+            </div>
+
+            <button class="cover-start-btn" onclick="startAnalysis()">开始探索</button>
 
             <div class="cover-footer">
-                科学评估 · 专业分析 · 尊重隐私
+                🔒 您的信息完全保密，所有数据仅在本地处理
             </div>
         </div>
     </div>
 
-    <!-- 测评主体 -->
-    <div class="quiz-container" id="quizContainer">
-    <div class="container">
-        <div class="header">
-            <h1>BDSM人格测评</h1>
-            <p class="subtitle">Dominance-Submission Personality Assessment</p>
-        </div>
-
-        <div class="card">
-            <div class="progress-container">
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progressFill"></div>
-                </div>
-                <div class="progress-text"><span id="currentQuestion">0</span> / <span id="totalQuestions">0</span></div>
-            </div>
-
-            <div id="questionsContainer"></div>
-
-            <div class="result-section" id="resultSection">
-                <h2 style="font-size: 28px; margin-bottom: 20px; color: #202124;">您的人格特质报告</h2>
-                <p style="color: #5f6368; margin-bottom: 30px;">Personality Trait Assessment Report</p>
-
-                <div class="result-chart">
-                    <div class="result-bar-container">
-                        <div class="result-label dominant">支配型<br>Dominant</div>
-                        <div class="result-bar">
-                            <div class="result-bar-fill dominant" id="dominantBar" style="width: 0%">
-                                <span id="dominantScore">0%</span>
-                            </div>
+    <!-- 输入页 -->
+    <div class="input-page" id="inputPage">
+        <div class="container">
+            <div class="card">
+                <div class="progress-container">
+                    <div class="progress-steps">
+                        <div class="progress-step active" id="progressStep1">
+                            <div class="progress-step-circle">1</div>
+                            <div class="progress-step-label">基础信息</div>
                         </div>
-                    </div>
-                    <div class="result-bar-container">
-                        <div class="result-label submissive">顺从型<br>Submissive</div>
-                        <div class="result-bar">
-                            <div class="result-bar-fill submissive" id="submissiveBar" style="width: 0%">
-                                <span id="submissiveScore">0%</span>
-                            </div>
+                        <div class="progress-step" id="progressStep2">
+                            <div class="progress-step-circle">2</div>
+                            <div class="progress-step-label">配对分析</div>
+                        </div>
+                        <div class="progress-step" id="progressStep3">
+                            <div class="progress-step-circle">3</div>
+                            <div class="progress-step-label">运势查询</div>
                         </div>
                     </div>
                 </div>
 
-                <div class="result-type" id="resultType"></div>
-                <div class="result-type-label" id="resultTypeLabel"></div>
+                <!-- 步骤1：基础信息 -->
+                <div class="input-step active" id="step1">
+                    <h2 class="step-title">告诉我们你的出生信息</h2>
+                    <p class="step-subtitle">我们将为你精准计算星座</p>
 
-                <div class="result-description" id="resultDescription"></div>
+                    <div class="form-group">
+                        <label class="form-label">出生日期 <span class="required">*</span></label>
+                        <input type="date" class="form-input" id="birthDate" required>
+                        <span class="form-hint">必填 - 用于计算太阳星座</span>
+                    </div>
 
-                <div class="dimensions" id="dimensionsContainer"></div>
+                    <div class="form-group">
+                        <label class="form-label">出生时间 (选填)</label>
+                        <input type="time" class="form-input" id="birthTime">
+                        <span class="form-hint">填写可计算月亮星座，分析更精准！</span>
+                    </div>
 
-                <div class="button-container" style="margin-top: 40px;">
-                    <button class="btn btn-primary" onclick="location.reload()">重新测评 Retake Assessment</button>
+                    <div class="form-group">
+                        <label class="form-label">出生地点 (选填)</label>
+                        <select class="form-select" id="birthCity">
+                            <option value="">请选择出生城市...</option>
+                            <option value="北京">北京</option>
+                            <option value="上海">上海</option>
+                            <option value="广州">广州</option>
+                            <option value="深圳">深圳</option>
+                            <option value="成都">成都</option>
+                            <option value="杭州">杭州</option>
+                            <option value="重庆">重庆</option>
+                            <option value="西安">西安</option>
+                            <option value="武汉">武汉</option>
+                            <option value="南京">南京</option>
+                            <option value="天津">天津</option>
+                            <option value="苏州">苏州</option>
+                            <option value="长沙">长沙</option>
+                            <option value="郑州">郑州</option>
+                            <option value="东莞">东莞</option>
+                            <option value="青岛">青岛</option>
+                            <option value="沈阳">沈阳</option>
+                            <option value="宁波">宁波</option>
+                            <option value="昆明">昆明</option>
+                            <option value="济南">济南</option>
+                        </select>
+                        <span class="form-hint">填写时间+地点可计算上升星座</span>
+                    </div>
+
+                    <div class="button-container">
+                        <button class="btn btn-secondary" onclick="backToCover()">返回</button>
+                        <button class="btn btn-primary" onclick="nextStep(1)" id="nextBtn1">下一步</button>
+                    </div>
                 </div>
-            </div>
 
-            <div class="button-container" id="navigationButtons">
-                <button class="btn btn-secondary" id="prevBtn" onclick="prevQuestion()">上一题</button>
-                <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>下一题</button>
+                <!-- 步骤2：配对分析 -->
+                <div class="input-step" id="step2">
+                    <h2 class="step-title">想了解你和TA的星座配对吗？</h2>
+                    <p class="step-subtitle">我们将分析你们的匹配度</p>
+
+                    <div class="option-cards">
+                        <div class="option-card" onclick="selectMatchOption(true)">
+                            <div class="option-card-icon">💕</div>
+                            <div class="option-card-title">是的，我想了解</div>
+                            <div class="option-card-desc">查看你们的星座匹配度</div>
+                        </div>
+                        <div class="option-card" onclick="selectMatchOption(false)">
+                            <div class="option-card-icon">🚫</div>
+                            <div class="option-card-title">暂时不需要</div>
+                            <div class="option-card-desc">直接查看我的分析</div>
+                        </div>
+                    </div>
+
+                    <div class="partner-info" id="partnerInfo">
+                        <div class="form-group">
+                            <label class="form-label">TA的出生日期</label>
+                            <input type="date" class="form-input" id="partnerDate">
+                        </div>
+                    </div>
+
+                    <div class="button-container">
+                        <button class="btn btn-secondary" onclick="prevStep(2)">上一步</button>
+                        <button class="btn btn-primary" onclick="nextStep(2)">下一步</button>
+                    </div>
+                </div>
+
+                <!-- 步骤3：运势查询 -->
+                <div class="input-step" id="step3">
+                    <h2 class="step-title">查看你的运势预测？</h2>
+                    <p class="step-subtitle">基于当前时间的专业运势分析</p>
+
+                    <div class="form-group">
+                        <label class="checkbox-option">
+                            <input type="checkbox" id="weekFortune" checked>
+                            <span>查看本周运势</span>
+                        </label>
+                        <label class="checkbox-option">
+                            <input type="checkbox" id="monthFortune" checked>
+                            <span>查看本月运势</span>
+                        </label>
+                    </div>
+
+                    <div class="button-container">
+                        <button class="btn btn-secondary" onclick="prevStep(3)">上一步</button>
+                        <button class="btn btn-primary" onclick="submitForm()">开始分析</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
+    <!-- 结果页 -->
+    <div class="result-page" id="resultPage">
+        <div class="result-container">
+            <!-- 星座徽章 -->
+            <div class="zodiac-badge" id="zodiacBadge">
+                <div class="zodiac-symbol" id="zodiacSymbol">♈</div>
+                <div class="zodiac-name" id="zodiacName">白羊座</div>
+                <div class="zodiac-dates" id="zodiacDates">3月21日 - 4月19日</div>
+            </div>
+
+            <!-- 三大星座 -->
+            <div class="big-three" id="bigThree">
+                <div class="sign-card">
+                    <div class="sign-card-icon">☉</div>
+                    <div class="sign-card-label">太阳星座</div>
+                    <div class="sign-card-name" id="sunSign">白羊座</div>
+                    <div class="sign-card-meaning">核心人格</div>
+                </div>
+                <div class="sign-card">
+                    <div class="sign-card-icon">☽</div>
+                    <div class="sign-card-label">月亮星座</div>
+                    <div class="sign-card-name" id="moonSign">--</div>
+                    <div class="sign-card-meaning">情感需求</div>
+                </div>
+                <div class="sign-card">
+                    <div class="sign-card-icon">↗</div>
+                    <div class="sign-card-label">上升星座</div>
+                    <div class="sign-card-name" id="risingSign">--</div>
+                    <div class="sign-card-meaning">外在形象</div>
+                </div>
+            </div>
+
+            <!-- 12维度分析 -->
+            <h2 class="section-title">深度性格分析</h2>
+            <div class="dimensions-grid" id="dimensionsGrid">
+                <!-- 维度卡片将通过 JavaScript 动态生成 -->
+            </div>
+
+            <!-- 配对分析 -->
+            <div id="compatibilitySection" style="display: none;">
+                <h2 class="section-title">星座配对分析</h2>
+                <div class="compatibility-container">
+                    <div class="compatibility-signs">
+                        <div class="compatibility-sign">
+                            <div class="compatibility-sign-symbol" id="yourSignSymbol"></div>
+                            <div class="compatibility-sign-name" id="yourSignName"></div>
+                        </div>
+                        <div class="compatibility-heart">💕</div>
+                        <div class="compatibility-sign">
+                            <div class="compatibility-sign-symbol" id="partnerSignSymbol"></div>
+                            <div class="compatibility-sign-name" id="partnerSignName"></div>
+                        </div>
+                    </div>
+                    <div class="compatibility-score-section">
+                        <svg class="compatibility-circle" width="120" height="120">
+                            <circle class="compatibility-circle-bg" cx="60" cy="60" r="54" fill="none" stroke="#e0e0e0" stroke-width="8"></circle>
+                            <circle class="compatibility-circle-progress" cx="60" cy="60" r="54" fill="none" stroke="#667eea" stroke-width="8" stroke-linecap="round" transform="rotate(-90 60 60)"></circle>
+                        </svg>
+                        <div class="compatibility-score-value">
+                            <span id="compatibilityScore">0</span>
+                            <span class="compatibility-score-unit">分</span>
+                        </div>
+                    </div>
+                    <div id="compatibilityLevel" class="compatibility-level"></div>
+                    <div id="compatibilityAnalysis" class="compatibility-analysis"></div>
+                </div>
+            </div>
+
+            <!-- 运势预测 -->
+            <div id="fortuneSection" style="display: none;">
+                <h2 class="section-title">运势预测</h2>
+                <div class="fortune-tabs">
+                    <button class="fortune-tab" id="weekFortuneTab" onclick="showFortuneTab('week')">本周运势</button>
+                    <button class="fortune-tab" id="monthFortuneTab" onclick="showFortuneTab('month')">本月运势</button>
+                </div>
+                <div class="fortune-tab-content active" id="weekFortuneContent"></div>
+                <div class="fortune-tab-content" id="monthFortuneContent"></div>
+            </div>
+
+            <!-- 操作按钮 -->
+            <div class="result-actions">
+                <button class="btn btn-primary" onclick="restartAnalysis()">重新测试</button>
+            </div>
+        </div>
     </div>
 
     <script>
-        function startQuiz() {
-            document.getElementById('coverPage').style.display = 'none';
-            document.getElementById('quizContainer').classList.add('active');
+        // ========== 全局变量 ==========
+        let currentStep = 1;
+        let userData = {
+            birthDate: null,
+            birthTime: null,
+            birthCity: null,
+            needMatch: false,
+            partnerDate: null,
+            needWeekFortune: true,
+            needMonthFortune: true
+        };
+
+        // ========== 初始化 ==========
+        window.addEventListener('DOMContentLoaded', () => {
+            initStarfield();
+
+            // 设置默认日期为今天
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('birthDate').setAttribute('max', today);
+            document.getElementById('partnerDate').setAttribute('max', today);
+        });
+
+        // ========== 星空背景动画 ==========
+        function initStarfield() {
+            const starfield = document.getElementById('starfield');
+            const starCount = 100;
+
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.width = (Math.random() * 2 + 1) + 'px';
+                star.style.height = star.style.width;
+                star.style.animationDelay = Math.random() * 3 + 's';
+                starfield.appendChild(star);
+            }
         }
 
-        const questions = [
-            {
-                category: "控制欲望 Control Desire",
-                dimension: "control",
-                question: "在亲密关系中，您更倾向于哪种角色？",
-                options: [
-                    { text: "我希望完全掌控局面，主导整个过程", score: 5, type: "dom" },
-                    { text: "我喜欢主导，但也愿意适度听取对方意见", score: 3, type: "dom" },
-                    { text: "我没有特别的偏好，顺其自然", score: 0, type: "neutral" },
-                    { text: "我更喜欢被引导，让对方做决定", score: 3, type: "sub" },
-                    { text: "我完全希望被对方掌控和支配", score: 5, type: "sub" }
-                ]
-            },
-            {
-                category: "权力动态 Power Dynamics",
-                dimension: "power",
-                question: "在日常生活中，您对权力关系的态度是？",
-                options: [
-                    { text: "我天生喜欢领导和指挥他人", score: 5, type: "dom" },
-                    { text: "我能够在需要时承担领导角色", score: 3, type: "dom" },
-                    { text: "我对权力关系没有特殊感觉", score: 0, type: "neutral" },
-                    { text: "我更舒适于跟随他人的引导", score: 3, type: "sub" },
-                    { text: "我喜欢服从和执行他人的指示", score: 5, type: "sub" }
-                ]
-            },
-            {
-                category: "责任承担 Responsibility",
-                dimension: "responsibility",
-                question: "在互动中，您对承担责任的态度如何？",
-                options: [
-                    { text: "我愿意为所有决定负全责", score: 5, type: "dom" },
-                    { text: "我可以承担主要责任", score: 3, type: "dom" },
-                    { text: "我希望责任由双方共同承担", score: 0, type: "neutral" },
-                    { text: "我更喜欢他人为我做决定", score: 3, type: "sub" },
-                    { text: "我完全不想承担决策责任", score: 5, type: "sub" }
-                ]
-            },
-            {
-                category: "规则制定 Rule Setting",
-                dimension: "rules",
-                question: "关于规则和界限，您的倾向是？",
-                options: [
-                    { text: "我喜欢制定规则并要求他人遵守", score: 5, type: "dom" },
-                    { text: "我会设定一些基本准则", score: 3, type: "dom" },
-                    { text: "我认为规则应该共同商定", score: 0, type: "neutral" },
-                    { text: "我更愿意遵守他人制定的规则", score: 3, type: "sub" },
-                    { text: "我享受严格遵守规则的感觉", score: 5, type: "sub" }
-                ]
-            },
-            {
-                category: "情绪表达 Emotional Expression",
-                dimension: "emotion",
-                question: "在情感交流中，您的表达方式是？",
-                options: [
-                    { text: "我倾向于保持强势和主导的姿态", score: 5, type: "dom" },
-                    { text: "我会展现自信但也有温柔的一面", score: 3, type: "dom" },
-                    { text: "我的情绪表达比较平衡", score: 0, type: "neutral" },
-                    { text: "我倾向于展现温顺和依赖的一面", score: 3, type: "sub" },
-                    { text: "我喜欢完全展现脆弱和服从", score: 5, type: "sub" }
-                ]
-            },
-            {
-                category: "信任建立 Trust Building",
-                dimension: "trust",
-                question: "在建立信任关系时，您的方式是？",
-                options: [
-                    { text: "我通过展示能力和可靠性赢得信任", score: 5, type: "dom" },
-                    { text: "我会主动建立信任基础", score: 3, type: "dom" },
-                    { text: "我认为信任需要相互建立", score: 0, type: "neutral" },
-                    { text: "我通过展现顺从来建立信任", score: 3, type: "sub" },
-                    { text: "我完全依赖对方建立信任", score: 5, type: "sub" }
-                ]
-            },
-            {
-                category: "奖惩机制 Reward & Discipline",
-                dimension: "discipline",
-                question: "您对奖惩机制的看法是？",
-                options: [
-                    { text: "我喜欢设定奖惩标准并执行", score: 5, type: "dom" },
-                    { text: "我认为适度的奖惩是必要的", score: 3, type: "dom" },
-                    { text: "我对奖惩没有特殊偏好", score: 0, type: "neutral" },
-                    { text: "我愿意接受合理的奖惩", score: 3, type: "sub" },
-                    { text: "我渴望被奖励或惩罚", score: 5, type: "sub" }
-                ]
-            },
-            {
-                category: "主动性 Initiative",
-                dimension: "initiative",
-                question: "在互动开始时，您通常如何表现？",
-                options: [
-                    { text: "我总是主动发起和引导", score: 5, type: "dom" },
-                    { text: "我经常会主动开始", score: 3, type: "dom" },
-                    { text: "我有时主动有时被动", score: 0, type: "neutral" },
-                    { text: "我更喜欢等待对方主动", score: 3, type: "sub" },
-                    { text: "我完全等待对方的引导", score: 5, type: "sub" }
-                ]
-            },
-            {
-                category: "边界设定 Boundary Setting",
-                dimension: "boundary",
-                question: "关于个人边界，您的态度是？",
-                options: [
-                    { text: "我清楚自己的边界并强势维护", score: 5, type: "dom" },
-                    { text: "我会明确表达自己的界限", score: 3, type: "dom" },
-                    { text: "我的边界比较灵活", score: 0, type: "neutral" },
-                    { text: "我愿意为对方调整边界", score: 3, type: "sub" },
-                    { text: "我希望对方为我设定边界", score: 5, type: "sub" }
-                ]
-            },
-            {
-                category: "沟通方式 Communication Style",
-                dimension: "communication",
-                question: "在沟通交流中，您的风格是？",
-                options: [
-                    { text: "我倾向于直接、坚定地表达要求", score: 5, type: "dom" },
-                    { text: "我会清晰地表达自己的想法", score: 3, type: "dom" },
-                    { text: "我的沟通方式比较平和", score: 0, type: "neutral" },
-                    { text: "我更倾向于委婉、顺从的表达", score: 3, type: "sub" },
-                    { text: "我习惯用恭顺的方式沟通", score: 5, type: "sub" }
-                ]
-            },
-            {
-                category: "决策模式 Decision Making",
-                dimension: "decision",
-                question: "在需要做决定时，您的方式是？",
-                options: [
-                    { text: "我迅速果断地做出决定", score: 5, type: "dom" },
-                    { text: "我能够自信地做出选择", score: 3, type: "dom" },
-                    { text: "我会考虑多方意见后决定", score: 0, type: "neutral" },
-                    { text: "我倾向于征询他人意见", score: 3, type: "sub" },
-                    { text: "我希望他人为我做决定", score: 5, type: "sub" }
-                ]
-            },
-            {
-                category: "冲突处理 Conflict Resolution",
-                dimension: "conflict",
-                question: "面对分歧或冲突时，您会如何应对？",
-                options: [
-                    { text: "我会坚持自己的立场并说服对方", score: 5, type: "dom" },
-                    { text: "我会主导寻找解决方案", score: 3, type: "dom" },
-                    { text: "我会寻求双方都能接受的方案", score: 0, type: "neutral" },
-                    { text: "我倾向于妥协和让步", score: 3, type: "sub" },
-                    { text: "我会完全服从对方的决定", score: 5, type: "sub" }
-                ]
-            },
-            {
-                category: "照料角色 Care Role",
-                dimension: "care",
-                question: "在关系中，您倾向于扮演什么照料角色？",
-                options: [
-                    { text: "我喜欢照顾、保护和指导对方", score: 5, type: "dom" },
-                    { text: "我愿意承担照顾者的角色", score: 3, type: "dom" },
-                    { text: "我认为应该相互照顾", score: 0, type: "neutral" },
-                    { text: "我享受被照顾和保护的感觉", score: 3, type: "sub" },
-                    { text: "我完全依赖对方的照料", score: 5, type: "sub" }
-                ]
-            },
-            {
-                category: "自主性 Autonomy",
-                dimension: "autonomy",
-                question: "关于个人自主权，您的看法是？",
-                options: [
-                    { text: "我坚持拥有完全的自主决定权", score: 5, type: "dom" },
-                    { text: "我重视自己的独立性", score: 3, type: "dom" },
-                    { text: "我在自主与合作之间平衡", score: 0, type: "neutral" },
-                    { text: "我愿意让渡部分自主权", score: 3, type: "sub" },
-                    { text: "我喜欢将自主权交给对方", score: 5, type: "sub" }
-                ]
-            },
-            {
-                category: "满足感来源 Satisfaction Source",
-                dimension: "satisfaction",
-                question: "什么能给您带来最大的满足感？",
-                options: [
-                    { text: "看到对方服从我的引导", score: 5, type: "dom" },
-                    { text: "成功主导一段关系", score: 3, type: "dom" },
-                    { text: "双方平等互动的和谐", score: 0, type: "neutral" },
-                    { text: "满足对方的期待", score: 3, type: "sub" },
-                    { text: "完全顺从对方的意愿", score: 5, type: "sub" }
-                ]
+        // ========== 页面切换 ==========
+        function startAnalysis() {
+            document.getElementById('coverPage').classList.add('hidden');
+            document.getElementById('inputPage').classList.add('active');
+        }
+
+        function backToCover() {
+            document.getElementById('inputPage').classList.remove('active');
+            document.getElementById('coverPage').classList.remove('hidden');
+            currentStep = 1;
+        }
+
+        // ========== 步骤切换 ==========
+        function nextStep(step) {
+            // 验证当前步骤
+            if (step === 1) {
+                const birthDate = document.getElementById('birthDate').value;
+                if (!birthDate) {
+                    alert('请填写出生日期');
+                    return;
+                }
+                userData.birthDate = birthDate;
+                userData.birthTime = document.getElementById('birthTime').value;
+                userData.birthCity = document.getElementById('birthCity').value;
             }
+
+            // 切换步骤
+            document.getElementById(`step${step}`).classList.remove('active');
+            document.getElementById(`step${step + 1}`).classList.add('active');
+
+            // 更新进度条
+            document.getElementById(`progressStep${step}`).classList.remove('active');
+            document.getElementById(`progressStep${step}`).classList.add('completed');
+            document.getElementById(`progressStep${step + 1}`).classList.add('active');
+
+            currentStep = step + 1;
+        }
+
+        function prevStep(step) {
+            document.getElementById(`step${step}`).classList.remove('active');
+            document.getElementById(`step${step - 1}`).classList.add('active');
+
+            document.getElementById(`progressStep${step}`).classList.remove('active');
+            document.getElementById(`progressStep${step - 1}`).classList.remove('completed');
+            document.getElementById(`progressStep${step - 1}`).classList.add('active');
+
+            currentStep = step - 1;
+        }
+
+        // ========== 选项选择 ==========
+        function selectMatchOption(needMatch) {
+            userData.needMatch = needMatch;
+
+            // 更新选中状态
+            const cards = document.querySelectorAll('#step2 .option-card');
+            cards.forEach(card => card.classList.remove('selected'));
+            event.currentTarget.classList.add('selected');
+
+            // 显示/隐藏配偶信息
+            const partnerInfo = document.getElementById('partnerInfo');
+            if (needMatch) {
+                partnerInfo.classList.add('active');
+            } else {
+                partnerInfo.classList.remove('active');
+            }
+        }
+
+        // ========== 提交表单 ==========
+        function submitForm() {
+            // 收集数据
+            userData.needWeekFortune = document.getElementById('weekFortune').checked;
+            userData.needMonthFortune = document.getElementById('monthFortune').checked;
+
+            if (userData.needMatch) {
+                userData.partnerDate = document.getElementById('partnerDate').value;
+            }
+
+            // 计算星座
+            calculateAndDisplay();
+        }
+
+        // ========== 计算和显示结果 ==========
+        function calculateAndDisplay() {
+            // 切换到结果页
+            document.getElementById('inputPage').classList.remove('active');
+            document.getElementById('resultPage').classList.add('active');
+
+            // 滚动到顶部
+            window.scrollTo(0, 0);
+
+            // 创建完整的出生日期时间
+            let birthDateTime = new Date(userData.birthDate);
+            if (userData.birthTime) {
+                const [hours, minutes] = userData.birthTime.split(':');
+                birthDateTime.setHours(parseInt(hours), parseInt(minutes), 0);
+            }
+
+            // 计算太阳星座
+            const sunSign = calculateSunSign(birthDateTime);
+
+            // 计算月亮星座（如果有时间）
+            let moonSign = null;
+            if (userData.birthTime) {
+                moonSign = calculateMoonSign(birthDateTime);
+            }
+
+            // 计算上升星座（如果有时间和地点）
+            let risingSign = null;
+            if (userData.birthTime && userData.birthCity) {
+                risingSign = calculateAscendant(birthDateTime, userData.birthCity);
+            }
+
+            // 计算配对（如果需要）
+            let partnerSign = null;
+            let compatibility = null;
+            if (userData.needMatch && userData.partnerDate) {
+                partnerSign = calculateSunSign(new Date(userData.partnerDate));
+                compatibility = calculateCompatibility(sunSign, partnerSign);
+            }
+
+            // 生成运势（如果需要）
+            let fortune = null;
+            if (userData.needWeekFortune || userData.needMonthFortune) {
+                fortune = {
+                    week: userData.needWeekFortune ? generateFortune(sunSign, 'week') : null,
+                    month: userData.needMonthFortune ? generateFortune(sunSign, 'month') : null
+                };
+            }
+
+            // 显示结果
+            displayResults(sunSign, moonSign, risingSign, partnerSign, compatibility, fortune);
+        }
+
+        // ========== 太阳星座计算（临时简化版） ==========
+        const ZODIAC_SIGNS = [
+            { name: '白羊座', symbol: '♈', dates: '3月21日 - 4月19日', element: '火', quality: '基本', index: 0 },
+            { name: '金牛座', symbol: '♉', dates: '4月20日 - 5月20日', element: '土', quality: '固定', index: 1 },
+            { name: '双子座', symbol: '♊', dates: '5月21日 - 6月21日', element: '风', quality: '变动', index: 2 },
+            { name: '巨蟹座', symbol: '♋', dates: '6月22日 - 7月22日', element: '水', quality: '基本', index: 3 },
+            { name: '狮子座', symbol: '♌', dates: '7月23日 - 8月22日', element: '火', quality: '固定', index: 4 },
+            { name: '处女座', symbol: '♍', dates: '8月23日 - 9月22日', element: '土', quality: '变动', index: 5 },
+            { name: '天秤座', symbol: '♎', dates: '9月23日 - 10月23日', element: '风', quality: '基本', index: 6 },
+            { name: '天蝎座', symbol: '♏', dates: '10月24日 - 11月22日', element: '水', quality: '固定', index: 7 },
+            { name: '射手座', symbol: '♐', dates: '11月23日 - 12月21日', element: '火', quality: '变动', index: 8 },
+            { name: '摩羯座', symbol: '♑', dates: '12月22日 - 1月19日', element: '土', quality: '基本', index: 9 },
+            { name: '水瓶座', symbol: '♒', dates: '1月20日 - 2月18日', element: '风', quality: '固定', index: 10 },
+            { name: '双鱼座', symbol: '♓', dates: '2月19日 - 3月20日', element: '水', quality: '变动', index: 11 }
         ];
 
-        let currentQuestionIndex = 0;
-        let answers = [];
+        // ========== 12星座详细内容数据库 ==========
+        const ZODIAC_CONTENT = {
+            '白羊座': {
+                dimensions: {
+                    personality: { icon: '🎭', title: '性格特质', score: 85, content: '白羊座充满活力和冒险精神，天生的领导者。直率坦诚，勇于表达自己的想法。行动力强，但有时过于冲动。热情洋溢，但缺乏耐心。喜欢挑战，不畏艰险。充满自信和勇气，敢于开创新局面。', traits: ['勇敢无畏', '热情直率', '行动派', '竞争意识强'] },
+                    love: { icon: '💕', title: '爱情运势', score: 78, content: '白羊座在爱情中热情似火，勇于追求。喜欢直来直去的恋爱方式，讨厌暧昧和拖延。占有欲强，需要伴侣的回应和肯定。适合与同样热情的火象星座或提供稳定的土象星座配对。', traits: ['热情主动', '直接坦率', '占有欲强'] },
+                    career: { icon: '💼', title: '事业发展', score: 82, content: '白羊座适合需要领导力和决断力的工作。天生的创业者和开拓者。适合竞争激烈的行业，如销售、创业、体育、军事等。不适合需要长期耐心的重复性工作。', traits: ['领导能力', '创新精神', '执行力强'] },
+                    health: { icon: '🏥', title: '健康指南', score: 75, content: '白羊座精力充沛，但容易因冲动受伤。需要注意头部、眼睛和神经系统。适合高强度运动释放能量。容易因压力导致头痛和失眠。建议保持规律作息，学会放松。', traits: ['精力旺盛', '易受伤', '需要运动'] },
+                    wealth: { icon: '💰', title: '财运分析', score: 80, content: '白羊座赚钱能力强，但花钱也快。冲动消费倾向明显。适合高风险高回报的投资，但需要专业指导。建议制定预算，培养储蓄习惯。', traits: ['赚钱能力强', '冲动消费', '投资激进'] },
+                    relationships: { icon: '👥', title: '人际关系', score: 88, content: '白羊座直率真诚，朋友众多。但有时过于直接容易伤害他人。需要学会换位思考和倾听。适合与同样直爽的朋友相处。', traits: ['真诚直率', '朋友众多', '偶尔过激'] },
+                    strengths: { icon: '⭐', title: '优势潜能', score: 90, content: '勇敢无畏，敢为人先。行动力强，执行力出色。热情洋溢，感染力强。竞争意识强，不服输。', traits: ['领导力', '执行力', '勇气', '创新力', '热情'] },
+                    weaknesses: { icon: '⚠️', title: '劣势警示', score: 65, content: '冲动急躁，缺乏耐心。容易情绪化，控制力弱。过于自我，忽视他人。缺乏长期规划。', traits: ['冲动', '急躁', '自我', '缺乏耐心'] },
+                    development: { icon: '📈', title: '发展建议', score: 83, content: '学会控制冲动，三思而后行。培养耐心和倾听能力。制定长期目标并坚持执行。学会团队合作，尊重他人意见。', traits: ['情绪管理', '长期规划', '团队协作'] },
+                    lucky: { icon: '🍀', title: '幸运元素', score: 92, content: '幸运色：红色、橙色 | 幸运数字：1、9、18、27 | 幸运日：周二 | 幸运石：红宝石 | 幸运花：木棉花', traits: ['红色', '数字1', '周二', '红宝石'] },
+                    jobs: { icon: '💡', title: '适合职业', score: 86, content: '创业者/企业家、销售经理、体育运动员、军人/警察、外科医生、消防员、项目经理、广告创意总监、竞技选手、探险家', traits: ['创业', '销售', '运动', '管理'] },
+                    fortune: { icon: '🎯', title: '年度运势', score: 81, content: '2025年白羊座整体运势向好。事业上有突破机会，但需要把握时机。感情运势起伏，单身者有机会遇到心仪对象。财运稳定，投资需谨慎。健康注意休息，避免过度劳累。', traits: ['事业有成', '感情起伏', '财运稳定'] }
+                }
+            },
+            '金牛座': {
+                dimensions: {
+                    personality: { icon: '🎭', title: '性格特质', score: 80, content: '金牛座踏实稳重，注重安全感。性格温和，但有固执的一面。喜欢舒适的生活，追求物质享受。耐心十足，能够坚持长期目标。重视传统和稳定。', traits: ['踏实稳重', '温和固执', '追求享受', '耐心十足'] },
+                    love: { icon: '💕', title: '爱情运势', score: 85, content: '金牛座在爱情中忠诚专一，重视稳定的关系。喜欢用实际行动表达爱意。占有欲强，需要安全感。适合与同样重视稳定的伴侣在一起。', traits: ['忠诚专一', '重视稳定', '占有欲强'] },
+                    career: { icon: '💼', title: '事业发展', score: 88, content: '金牛座适合需要耐心和细致的工作。在金融、艺术、餐饮等领域表现出色。踏实肯干，能够长期坚持。不适合需要频繁变动的工作。', traits: ['耐心细致', '踏实肯干', '稳定性强'] },
+                    health: { icon: '🏥', title: '健康指南', score: 78, content: '金牛座体质较好，但容易因贪图享受而过度饮食。需要注意喉咙、颈部和甲状腺健康。适合规律的运动，避免久坐。', traits: ['体质较好', '易发胖', '需要运动'] },
+                    wealth: { icon: '💰', title: '财运分析', score: 90, content: '金牛座理财能力强，善于积累财富。消费谨慎，但对高品质商品愿意投资。适合稳健型投资，如房产、基金等。', traits: ['理财高手', '稳健投资', '善于积累'] },
+                    relationships: { icon: '👥', title: '人际关系', score: 83, content: '金牛座为人真诚可靠，朋友信任度高。但有时过于固执，不易妥协。需要学会灵活变通，倾听不同意见。', traits: ['真诚可靠', '值得信任', '有点固执'] },
+                    strengths: { icon: '⭐', title: '优势潜能', score: 88, content: '踏实稳重，可靠值得信赖。耐心十足，能坚持到底。审美能力强，品味高雅。理财能力出色。', traits: ['稳重可靠', '耐心', '审美力', '理财能力'] },
+                    weaknesses: { icon: '⚠️', title: '劣势警示', score: 70, content: '过于固执，不易改变。贪图享受，容易懒惰。占有欲强，嫉妒心重。缺乏冒险精神。', traits: ['固执', '懒惰', '占有欲', '保守'] },
+                    development: { icon: '📈', title: '发展建议', score: 85, content: '学会灵活变通，接受改变。保持运动习惯，避免过度享受。培养冒险精神，尝试新事物。控制占有欲，给他人空间。', traits: ['灵活变通', '适度享受', '勇于尝试'] },
+                    lucky: { icon: '🍀', title: '幸运元素', score: 88, content: '幸运色：绿色、粉色 | 幸运数字：6、15、24、33 | 幸运日：周五 | 幸运石：祖母绿 | 幸运花：牵牛花', traits: ['绿色', '数字6', '周五', '祖母绿'] },
+                    jobs: { icon: '💡', title: '适合职业', score: 88, content: '金融分析师、会计师、厨师/美食家、艺术家、建筑师、园艺师、银行职员、房地产经纪人、珠宝设计师', traits: ['金融', '艺术', '餐饮', '设计'] },
+                    fortune: { icon: '🎯', title: '年度运势', score: 84, content: '2025年金牛座财运亨通，适合投资理财。事业稳步发展，但需保持耐心。感情生活和谐，单身者有望遇到合适对象。健康状况良好，注意饮食节制。', traits: ['财运亨通', '事业稳定', '感情和谐'] }
+                }
+            },
+            '双子座': {
+                dimensions: {
+                    personality: { icon: '🎭', title: '性格特质', score: 82, content: '双子座聪明机智，思维敏捷。好奇心强，善于交流。多才多艺，兴趣广泛。性格多变，喜欢新鲜事物。适应能力强，反应迅速。', traits: ['聪明机智', '善于交流', '多才多艺', '好奇心强'] },
+                    love: { icon: '💕', title: '爱情运势', score: 75, content: '双子座在爱情中追求新鲜感和精神交流。需要足够的自由空间，不喜欢被束缚。容易三分钟热度，需要不断的刺激和变化。', traits: ['追求新鲜', '重视交流', '需要自由'] },
+                    career: { icon: '💼', title: '事业发展', score: 85, content: '双子座适合需要沟通和创意的工作。在媒体、公关、销售、教育等领域如鱼得水。多任务处理能力强，但需注意专注力。', traits: ['沟通能力', '创意十足', '多任务处理'] },
+                    health: { icon: '🏥', title: '健康指南', score: 72, content: '双子座神经敏感，容易紧张焦虑。需要注意呼吸系统和肩颈健康。适合瑜伽、冥想等放松身心的活动。保持充足睡眠很重要。', traits: ['神经敏感', '易焦虑', '需要放松'] },
+                    wealth: { icon: '💰', title: '财运分析', score: 78, content: '双子座赚钱方式灵活多样，但理财观念较弱。容易冲动消费，追求新奇商品。建议制定理财计划，分散投资风险。', traits: ['赚钱灵活', '冲动消费', '理财较弱'] },
+                    relationships: { icon: '👥', title: '人际关系', score: 90, content: '双子座社交能力出众，朋友遍天下。善于沟通表达，能够快速建立关系。但有时过于圆滑，缺乏深度交流。', traits: ['社交达人', '善于沟通', '朋友众多'] },
+                    strengths: { icon: '⭐', title: '优势潜能', score: 87, content: '聪明机智，学习能力强。沟通表达能力出色。适应能力强，灵活变通。多才多艺，兴趣广泛。', traits: ['聪明', '沟通力', '适应力', '多才多艺'] },
+                    weaknesses: { icon: '⚠️', title: '劣势警示', score: 68, content: '三心二意，缺乏专注。情绪多变，不够稳定。过于圆滑，缺乏深度。容易焦虑，神经紧张。', traits: ['不专注', '多变', '圆滑', '焦虑'] },
+                    development: { icon: '📈', title: '发展建议', score: 80, content: '培养专注力，深入研究一个领域。学会深度交流，建立稳定关系。保持情绪稳定，减少焦虑。坚持长期目标，避免三分钟热度。', traits: ['培养专注', '深度交流', '情绪稳定'] },
+                    lucky: { icon: '🍀', title: '幸运元素', score: 85, content: '幸运色：黄色、橙色 | 幸运数字：5、14、23、32 | 幸运日：周三 | 幸运石：玛瑙 | 幸运花：铃兰', traits: ['黄色', '数字5', '周三', '玛瑙'] },
+                    jobs: { icon: '💡', title: '适合职业', score: 87, content: '记者/编辑、主持人、公关经理、销售代表、教师、翻译、作家、市场营销、社交媒体运营', traits: ['媒体', '公关', '销售', '教育'] },
+                    fortune: { icon: '🎯', title: '年度运势', score: 79, content: '2025年双子座运势多变，充满机遇和挑战。事业上有新的发展方向，但需保持专注。感情生活丰富多彩，但需注意稳定性。财运波动，投资需谨慎。', traits: ['机遇多', '需专注', '感情丰富'] }
+                }
+            },
+            '巨蟹座': {
+                dimensions: {
+                    personality: { icon: '🎭', title: '性格特质', score: 83, content: '巨蟹座温柔体贴，情感丰富。重视家庭和亲情，有强烈的保护欲。敏感细腻，善解人意。但有时过于情绪化，容易受伤。', traits: ['温柔体贴', '重视家庭', '敏感细腻', '情感丰富'] },
+                    love: { icon: '💕', title: '爱情运势', score: 88, content: '巨蟹座在爱情中专一深情，渴望稳定的关系。善于照顾伴侣，需要情感上的安全感。容易受伤，需要温柔的对待。', traits: ['专一深情', '善于照顾', '需要安全感'] },
+                    career: { icon: '💼', title: '事业发展', score: 79, content: '巨蟹座适合需要细心和耐心的工作。在护理、教育、餐饮、家居等领域表现出色。责任心强，但缺乏冒险精神。', traits: ['细心耐心', '责任心强', '保守稳健'] },
+                    health: { icon: '🏥', title: '健康指南', score: 74, content: '巨蟹座情绪敏感，容易因压力影响健康。需要注意胃部、胸部和消化系统。建议保持情绪稳定，多与亲友交流。', traits: ['情绪敏感', '胃部脆弱', '需要关怀'] },
+                    wealth: { icon: '💰', title: '财运分析', score: 82, content: '巨蟹座理财保守，重视储蓄。对家庭投资慷慨，但个人消费谨慎。适合稳健型投资，如房产、保险等。', traits: ['保守理财', '重视储蓄', '家庭优先'] },
+                    relationships: { icon: '👥', title: '人际关系', score: 86, content: '巨蟹座为人真诚，朋友信任度高。善于倾听，乐于助人。但有时过于敏感，容易多想。需要学会放下戒心。', traits: ['真诚善良', '善于倾听', '有点敏感'] },
+                    strengths: { icon: '⭐', title: '优势潜能', score: 89, content: '温柔体贴，善解人意。责任心强，值得信赖。直觉敏锐，洞察力强。家庭观念强，重视亲情。', traits: ['体贴', '责任心', '直觉力', '重视家庭'] },
+                    weaknesses: { icon: '⚠️', title: '劣势警示', score: 72, content: '过于敏感，容易受伤。情绪化，容易多想。缺乏安全感，依赖性强。保守固执，不易改变。', traits: ['敏感', '情绪化', '缺乏安全感', '保守'] },
+                    development: { icon: '📈', title: '发展建议', score: 81, content: '学会情绪管理，增强心理韧性。培养独立性，减少依赖。勇于尝试新事物，突破舒适区。建立自信，相信自己的能力。', traits: ['情绪管理', '培养独立', '勇于尝试'] },
+                    lucky: { icon: '🍀', title: '幸运元素', score: 87, content: '幸运色：白色、银色 | 幸运数字：2、11、20、29 | 幸运日：周一 | 幸运石：珍珠 | 幸运花：百合', traits: ['白色', '数字2', '周一', '珍珠'] },
+                    jobs: { icon: '💡', title: '适合职业', score: 84, content: '护士/医护人员、教师、厨师、心理咨询师、社工、室内设计师、房地产经纪人、托儿所管理员', traits: ['护理', '教育', '餐饮', '咨询'] },
+                    fortune: { icon: '🎯', title: '年度运势', score: 82, content: '2025年巨蟹座家庭运势良好，适合改善居住环境。事业稳定，但需注意情绪管理。感情生活温馨，单身者有望遇到合适对象。财运平稳。', traits: ['家庭和睦', '事业稳定', '感情温馨'] }
+                }
+            },
+            '狮子座': {
+                dimensions: {
+                    personality: { icon: '🎭', title: '性格特质', score: 87, content: '狮子座自信大方，充满魅力。天生的领导者，喜欢成为焦点。慷慨大度，乐于助人。但有时过于骄傲，需要别人的认可。', traits: ['自信大方', '领导魅力', '慷慨大度', '喜欢赞美'] },
+                    love: { icon: '💕', title: '爱情运势', score: 83, content: '狮子座在爱情中热情浪漫，喜欢被崇拜。需要伴侣的欣赏和赞美。占有欲强，但也慷慨付出。适合与欣赏自己的伴侣在一起。', traits: ['热情浪漫', '需要赞美', '慷慨付出'] },
+                    career: { icon: '💼', title: '事业发展', score: 89, content: '狮子座适合需要领导力和创造力的工作。在娱乐、艺术、管理、教育等领域大放异彩。自尊心强，追求成就感。', traits: ['领导能力', '创造力', '追求成就'] },
+                    health: { icon: '🏥', title: '健康指南', score: 80, content: '狮子座精力充沛，但容易因过度劳累而影响健康。需要注意心脏、脊椎和血压。适合规律运动，保持身心健康。', traits: ['精力充沛', '易劳累', '需要运动'] },
+                    wealth: { icon: '💰', title: '财运分析', score: 84, content: '狮子座赚钱能力强，但消费也大方。喜欢享受高品质生活，对自己和他人都很慷慨。建议合理规划，避免过度消费。', traits: ['赚钱能力强', '消费大方', '喜欢享受'] },
+                    relationships: { icon: '👥', title: '人际关系', score: 91, content: '狮子座魅力四射，朋友众多。慷慨大方，乐于助人。但有时过于自我，需要学会倾听他人意见。', traits: ['魅力十足', '慷慨大方', '有点自我'] },
+                    strengths: { icon: '⭐', title: '优势潜能', score: 92, content: '自信大方，领导能力强。创造力出色，充满魅力。慷慨大度，忠诚可靠。追求卓越，有进取心。', traits: ['领导力', '创造力', '魅力', '慷慨'] },
+                    weaknesses: { icon: '⚠️', title: '劣势警示', score: 67, content: '过于骄傲，爱面子。固执己见，不听劝告。过度自我，忽视他人。虚荣心强，追求赞美。', traits: ['骄傲', '固执', '自我', '虚荣'] },
+                    development: { icon: '📈', title: '发展建议', score: 86, content: '学会谦虚，倾听他人意见。放下面子，勇于承认错误。控制虚荣心，注重内在修养。培养耐心，学会妥协。', traits: ['学会谦虚', '放下面子', '耐心妥协'] },
+                    lucky: { icon: '🍀', title: '幸运元素', score: 90, content: '幸运色：金色、橙色 | 幸运数字：1、10、19、28 | 幸运日：周日 | 幸运石：琥珀 | 幸运花：向日葵', traits: ['金色', '数字1', '周日', '琥珀'] },
+                    jobs: { icon: '💡', title: '适合职业', score: 90, content: '企业高管、演员/艺人、导演、教师、政治家、创意总监、活动策划、珠宝设计师、奢侈品销售', traits: ['管理', '娱乐', '艺术', '政治'] },
+                    fortune: { icon: '🎯', title: '年度运势', score: 86, content: '2025年狮子座事业运势强劲，有望获得重要职位。感情生活浪漫，单身者桃花运旺。财运良好，但需注意过度消费。健康状况良好。', traits: ['事业强劲', '感情浪漫', '财运良好'] }
+                }
+            },
+            '处女座': {
+                dimensions: {
+                    personality: { icon: '🎭', title: '性格特质', score: 84, content: '处女座细心谨慎，追求完美。注重细节，做事认真负责。分析能力强，理性思维。但有时过于挑剔，给自己和他人压力。', traits: ['细心谨慎', '追求完美', '理性分析', '注重细节'] },
+                    love: { icon: '💕', title: '爱情运势', score: 76, content: '处女座在爱情中挑剔谨慎，不轻易付出。需要时间建立信任，一旦认定就会全心全意。重视伴侣的品质和修养。', traits: ['挑剔谨慎', '慢热专一', '重视品质'] },
+                    career: { icon: '💼', title: '事业发展', score: 91, content: '处女座适合需要细致和专业的工作。在医疗、财务、编辑、分析等领域表现卓越。完美主义者，但需注意过度压力。', traits: ['专业能力', '细致认真', '完美主义'] },
+                    health: { icon: '🏥', title: '健康指南', score: 77, content: '处女座注重健康，但容易焦虑。需要注意肠胃、神经系统和皮肤健康。建议保持规律生活，学会放松减压。', traits: ['注重健康', '易焦虑', '肠胃敏感'] },
+                    wealth: { icon: '💰', title: '财运分析', score: 87, content: '处女座理财谨慎，善于规划。消费理性，注重性价比。适合稳健型投资，风险控制能力强。', traits: ['理财谨慎', '善于规划', '注重性价比'] },
+                    relationships: { icon: '👥', title: '人际关系', score: 79, content: '处女座为人真诚，但有时过于挑剔。朋友不多但质量高。需要学会包容，少一些批评。', traits: ['真诚可靠', '有点挑剔', '朋友不多'] },
+                    strengths: { icon: '⭐', title: '优势潜能', score: 91, content: '细心谨慎，做事认真。分析能力强，逻辑清晰。追求完美，精益求精。责任心强，值得信赖。', traits: ['细心', '分析力', '完美主义', '责任心'] },
+                    weaknesses: { icon: '⚠️', title: '劣势警示', score: 71, content: '过于挑剔，吹毛求疵。焦虑紧张，压力过大。过分追求完美，给自己压力。缺乏冒险精神，过于保守。', traits: ['挑剔', '焦虑', '完美主义', '保守'] },
+                    development: { icon: '📈', title: '发展建议', score: 84, content: '学会接受不完美，降低标准。减少焦虑，学会放松。培养包容心，少一些批评。勇于尝试，突破舒适区。', traits: ['接受不完美', '学会放松', '培养包容'] },
+                    lucky: { icon: '🍀', title: '幸运元素', score: 86, content: '幸运色：灰色、米色 | 幸运数字：5、14、23、32 | 幸运日：周三 | 幸运石：蓝宝石 | 幸运花：紫罗兰', traits: ['灰色', '数字5', '周三', '蓝宝石'] },
+                    jobs: { icon: '💡', title: '适合职业', score: 89, content: '医生/药剂师、会计师、编辑/校对、数据分析师、质检员、营养师、图书管理员、研究员', traits: ['医疗', '财务', '编辑', '分析'] },
+                    fortune: { icon: '🎯', title: '年度运势', score: 80, content: '2025年处女座事业发展稳健，专业能力获得认可。感情生活需要放松，学会享受。财运良好，适合稳健投资。健康注意减压。', traits: ['事业稳健', '感情需放松', '财运良好'] }
+                }
+            },
+            '天秤座': {
+                dimensions: {
+                    personality: { icon: '🎭', title: '性格特质', score: 86, content: '天秤座优雅迷人，追求和谐。善于社交，待人友善。审美能力强，品味高雅。但有时犹豫不决，难以抉择。', traits: ['优雅迷人', '追求和谐', '善于社交', '审美出众'] },
+                    love: { icon: '💕', title: '爱情运势', score: 87, content: '天秤座在爱情中浪漫优雅，重视美感和氛围。需要平衡的关系，讨厌争吵。犹豫不决，但一旦认定就会全心投入。', traits: ['浪漫优雅', '重视和谐', '犹豫不决'] },
+                    career: { icon: '💼', title: '事业发展', score: 83, content: '天秤座适合需要审美和协调的工作。在艺术、设计、法律、外交等领域表现出色。善于协调，但决策能力需提升。', traits: ['审美能力', '协调能力', '善于沟通'] },
+                    health: { icon: '🏥', title: '健康指南', score: 76, content: '天秤座注重外表，但容易因犹豫而焦虑。需要注意肾脏、腰部和内分泌系统。建议保持运动习惯，规律作息。', traits: ['注重外表', '易焦虑', '需要平衡'] },
+                    wealth: { icon: '💰', title: '财运分析', score: 81, content: '天秤座消费注重品质和美感，容易因追求品味而超支。理财观念一般，需要加强规划。适合艺术品投资。', traits: ['注重品质', '容易超支', '需要规划'] },
+                    relationships: { icon: '👥', title: '人际关系', score: 92, content: '天秤座社交能力出众，朋友众多。善于协调，人缘极佳。但有时过于在意他人看法，需要坚持自我。', traits: ['社交达人', '人缘极佳', '善于协调'] },
+                    strengths: { icon: '⭐', title: '优势潜能', score: 89, content: '优雅迷人，气质出众。善于社交，协调能力强。审美能力强，品味高雅。公正客观，善于平衡。', traits: ['优雅', '社交力', '审美', '公正'] },
+                    weaknesses: { icon: '⚠️', title: '劣势警示', score: 69, content: '犹豫不决，难以抉择。过于在意他人看法，缺乏主见。逃避冲突，不敢面对。虚荣心强，爱面子。', traits: ['犹豫', '缺乏主见', '逃避冲突', '虚荣'] },
+                    development: { icon: '📈', title: '发展建议', score: 82, content: '培养决断力，学会快速决策。坚持自我，不过度在意他人看法。勇于面对冲突，解决问题。控制虚荣心，注重内在。', traits: ['培养决断', '坚持自我', '勇于面对'] },
+                    lucky: { icon: '🍀', title: '幸运元素', score: 88, content: '幸运色：粉色、蓝色 | 幸运数字：6、15、24、33 | 幸运日：周五 | 幸运石：蛋白石 | 幸运花：玫瑰', traits: ['粉色', '数字6', '周五', '蛋白石'] },
+                    jobs: { icon: '💡', title: '适合职业', score: 87, content: '设计师、律师、外交官、艺术家、公关经理、时尚顾问、婚礼策划师、美容顾问、调解员', traits: ['设计', '法律', '外交', '艺术'] },
+                    fortune: { icon: '🎯', title: '年度运势', score: 83, content: '2025年天秤座社交运势旺盛，人际关系和谐。事业需要果断决策，机会不容错过。感情生活浪漫，单身者桃花运佳。财运平稳。', traits: ['社交旺盛', '需要果断', '感情浪漫'] }
+                }
+            },
+            '天蝎座': {
+                dimensions: {
+                    personality: { icon: '🎭', title: '性格特质', score: 88, content: '天蝎座神秘深沉，洞察力强。意志坚定，执行力出色。情感强烈，爱憎分明。但有时过于极端，占有欲强。', traits: ['神秘深沉', '洞察力强', '意志坚定', '爱憎分明'] },
+                    love: { icon: '💕', title: '爱情运势', score: 90, content: '天蝎座在爱情中热情专一，占有欲极强。需要绝对的忠诚和信任。一旦受伤就很难原谅。适合与同样专一的伴侣在一起。', traits: ['热情专一', '占有欲强', '难以原谅'] },
+                    career: { icon: '💼', title: '事业发展', score: 90, content: '天蝎座适合需要洞察力和决断力的工作。在金融、心理、侦探、医疗等领域大放异彩。执行力强，但需注意过于极端。', traits: ['洞察力', '执行力', '决断力'] },
+                    health: { icon: '🏥', title: '健康指南', score: 79, content: '天蝎座精力充沛，但容易因情绪波动影响健康。需要注意生殖系统、泌尿系统和心理健康。建议学会情绪管理。', traits: ['精力充沛', '情绪波动', '需要管理'] },
+                    wealth: { icon: '💰', title: '财运分析', score: 86, content: '天蝎座理财能力强，善于发现机会。投资果断，风险承受能力高。但需注意过度冒险。适合金融投资。', traits: ['理财能力强', '投资果断', '承受风险'] },
+                    relationships: { icon: '👥', title: '人际关系', score: 77, content: '天蝎座朋友不多但很深交。忠诚可靠，但占有欲强。有时过于猜疑，需要学会信任。', traits: ['深交型', '忠诚可靠', '有点猜疑'] },
+                    strengths: { icon: '⭐', title: '优势潜能', score: 93, content: '洞察力强，直觉敏锐。意志坚定，执行力出色。专注投入，追求深度。忠诚可靠，值得信赖。', traits: ['洞察力', '意志力', '专注', '忠诚'] },
+                    weaknesses: { icon: '⚠️', title: '劣势警示', score: 66, content: '占有欲强，控制欲重。过于极端，黑白分明。猜疑心重，难以信任。报复心强，记仇。', traits: ['占有欲', '极端', '猜疑', '报复心'] },
+                    development: { icon: '📈', title: '发展建议', score: 85, content: '学会信任他人，减少猜疑。控制占有欲，给他人空间。培养宽容心，学会原谅。减少极端思维，看到灰色地带。', traits: ['学会信任', '控制占有欲', '培养宽容'] },
+                    lucky: { icon: '🍀', title: '幸运元素', score: 89, content: '幸运色：深红、黑色 | 幸运数字：8、17、26、35 | 幸运日：周二 | 幸运石：黑曜石 | 幸运花：菊花', traits: ['深红', '数字8', '周二', '黑曜石'] },
+                    jobs: { icon: '💡', title: '适合职业', score: 91, content: '心理咨询师、侦探、外科医生、金融分析师、研究员、密探、危机管理、法医、投资顾问', traits: ['心理', '侦探', '金融', '医疗'] },
+                    fortune: { icon: '🎯', title: '年度运势', score: 85, content: '2025年天蝎座事业运势强劲，有望获得重要突破。感情生活深刻，单身者易遇真爱。财运旺盛，投资有收获。健康注意情绪管理。', traits: ['事业突破', '感情深刻', '财运旺盛'] }
+                }
+            },
+            '射手座': {
+                dimensions: {
+                    personality: { icon: '🎭', title: '性格特质', score: 85, content: '射手座乐观开朗，热爱自由。好奇心强，喜欢探索。幽默风趣，充满活力。但有时过于直率，不顾后果。', traits: ['乐观开朗', '热爱自由', '好奇心强', '幽默风趣'] },
+                    love: { icon: '💕', title: '爱情运势', score: 77, content: '射手座在爱情中追求自由，讨厌束缚。需要足够的个人空间，重视精神交流。容易三分钟热度，需要不断刺激。', traits: ['追求自由', '讨厌束缚', '需要刺激'] },
+                    career: { icon: '💼', title: '事业发展', score: 86, content: '射手座适合需要创意和自由的工作。在旅游、教育、出版、体育等领域如鱼得水。乐观积极，但需注意专注力。', traits: ['创意十足', '乐观积极', '适应力强'] },
+                    health: { icon: '🏥', title: '健康指南', score: 81, content: '射手座精力充沛，热爱运动。需要注意大腿、肝脏和坐骨神经。容易因过度乐观而忽视健康，需要定期检查。', traits: ['精力充沛', '热爱运动', '易忽视健康'] },
+                    wealth: { icon: '💰', title: '财运分析', score: 79, content: '射手座赚钱能力强，但理财观念较弱。容易冲动消费，追求体验。建议制定预算，平衡消费和储蓄。', traits: ['赚钱能力强', '冲动消费', '追求体验'] },
+                    relationships: { icon: '👥', title: '人际关系', score: 90, content: '射手座朋友众多，人缘极佳。幽默风趣，善于活跃气氛。但有时过于直率，容易得罪人。需要学会说话技巧。', traits: ['人缘极佳', '幽默风趣', '过于直率'] },
+                    strengths: { icon: '⭐', title: '优势潜能', score: 88, content: '乐观开朗，积极向上。热爱自由，勇于冒险。幽默风趣，感染力强。好奇心强，热爱学习。', traits: ['乐观', '自由', '幽默', '好奇'] },
+                    weaknesses: { icon: '⚠️', title: '劣势警示', score: 70, content: '过于直率，不顾后果。三心二意，缺乏专注。过度乐观，忽视风险。不负责任，逃避承诺。', traits: ['直率', '不专注', '过度乐观', '逃避'] },
+                    development: { icon: '📈', title: '发展建议', score: 83, content: '学会说话技巧，考虑他人感受。培养专注力，坚持长期目标。理性评估风险，不过度乐观。承担责任，信守承诺。', traits: ['说话技巧', '培养专注', '承担责任'] },
+                    lucky: { icon: '🍀', title: '幸运元素', score: 87, content: '幸运色：紫色、深蓝 | 幸运数字：3、12、21、30 | 幸运日：周四 | 幸运石：绿松石 | 幸运花：康乃馨', traits: ['紫色', '数字3', '周四', '绿松石'] },
+                    jobs: { icon: '💡', title: '适合职业', score: 88, content: '旅游从业者、教师/教授、出版编辑、体育教练、翻译、哲学家、律师、广告创意、探险家', traits: ['旅游', '教育', '出版', '体育'] },
+                    fortune: { icon: '🎯', title: '年度运势', score: 82, content: '2025年射手座运势开阔，充满机遇。事业有新的发展方向，适合扩展。感情生活自由，但需注意稳定性。财运波动，投资需谨慎。', traits: ['机遇多', '事业扩展', '感情自由'] }
+                }
+            },
+            '摩羯座': {
+                dimensions: {
+                    personality: { icon: '🎭', title: '性格特质', score: 86, content: '摩羯座务实稳重，责任心强。有野心和抱负，追求成就。自律性高，能够坚持长期目标。但有时过于严肃，缺乏幽默感。', traits: ['务实稳重', '责任心强', '有野心', '自律性高'] },
+                    love: { icon: '💕', title: '爱情运势', score: 79, content: '摩羯座在爱情中传统保守，重视稳定。慢热型，需要时间建立信任。一旦认定就会全心付出。适合与成熟稳重的伴侣在一起。', traits: ['传统保守', '慢热专一', '重视稳定'] },
+                    career: { icon: '💼', title: '事业发展', score: 93, content: '摩羯座适合需要耐心和责任的工作。在管理、金融、建筑、政府等领域表现卓越。事业心强，容易成为行业精英。', traits: ['事业心强', '耐心负责', '管理能力'] },
+                    health: { icon: '🏥', title: '健康指南', score: 78, content: '摩羯座容易因工作压力影响健康。需要注意骨骼、关节和牙齿。建议保持运动习惯，学会放松减压。', traits: ['工作压力大', '骨骼问题', '需要放松'] },
+                    wealth: { icon: '💰', title: '财运分析', score: 89, content: '摩羯座理财能力出色，善于长期规划。消费保守，注重实用性。适合稳健型投资，财富积累能力强。', traits: ['理财出色', '善于规划', '稳健投资'] },
+                    relationships: { icon: '👥', title: '人际关系', score: 75, content: '摩羯座朋友不多但很真诚。为人可靠，值得信赖。但有时过于严肃，需要放松心态。', traits: ['真诚可靠', '值得信赖', '有点严肃'] },
+                    strengths: { icon: '⭐', title: '优势潜能', score: 91, content: '务实稳重，脚踏实地。责任心强，值得信赖。有野心抱负，追求成就。自律性高，能够坚持。', traits: ['务实', '责任心', '野心', '自律'] },
+                    weaknesses: { icon: '⚠️', title: '劣势警示', score: 73, content: '过于严肃，缺乏幽默。工作狂，忽视生活。固执保守，不易改变。悲观消极，压力过大。', traits: ['严肃', '工作狂', '保守', '悲观'] },
+                    development: { icon: '📈', title: '发展建议', score: 87, content: '培养幽默感，学会放松。平衡工作和生活，享受当下。开放心态，接受改变。保持乐观，减少压力。', traits: ['培养幽默', '平衡生活', '保持乐观'] },
+                    lucky: { icon: '🍀', title: '幸运元素', score: 86, content: '幸运色：黑色、褐色 | 幸运数字：8、17、26、35 | 幸运日：周六 | 幸运石：石榴石 | 幸运花：水仙', traits: ['黑色', '数字8', '周六', '石榴石'] },
+                    jobs: { icon: '💡', title: '适合职业', score: 92, content: '企业高管、会计师、建筑师、工程师、政府官员、银行家、人力资源、项目经理、律师', traits: ['管理', '金融', '建筑', '政府'] },
+                    fortune: { icon: '🎯', title: '年度运势', score: 84, content: '2025年摩羯座事业运势强劲，有望升职加薪。感情生活稳定，适合结婚。财运旺盛，投资收益良好。健康注意劳逸结合。', traits: ['事业强劲', '感情稳定', '财运旺盛'] }
+                }
+            },
+            '水瓶座': {
+                dimensions: {
+                    personality: { icon: '🎭', title: '性格特质', score: 83, content: '水瓶座独立创新，思维独特。追求自由，不喜束缚。理性客观，逻辑思维强。但有时过于冷漠，难以亲近。', traits: ['独立创新', '追求自由', '理性客观', '思维独特'] },
+                    love: { icon: '💕', title: '爱情运势', score: 74, content: '水瓶座在爱情中需要精神交流，重视友谊。需要足够的自由空间，讨厌束缚。理性多于感性，有时显得冷漠。', traits: ['重视精神', '需要自由', '理性冷静'] },
+                    career: { icon: '💼', title: '事业发展', score: 88, content: '水瓶座适合需要创新和自由的工作。在科技、创意、人道主义等领域表现出色。思维独特，适合开创性工作。', traits: ['创新能力', '独特思维', '自由度高'] },
+                    health: { icon: '🏥', title: '健康指南', score: 75, content: '水瓶座神经敏感，容易紧张。需要注意小腿、血液循环和神经系统。建议保持规律作息，多与他人交流。', traits: ['神经敏感', '易紧张', '需要交流'] },
+                    wealth: { icon: '💰', title: '财运分析', score: 80, content: '水瓶座理财观念独特，不拘一格。对金钱态度理性，但容易因追求理想而忽视现实。建议平衡理想和现实。', traits: ['观念独特', '态度理性', '需要平衡'] },
+                    relationships: { icon: '👥', title: '人际关系', score: 89, content: '水瓶座朋友众多，社交广泛。重视友谊，平等对待。但有时过于冷漠，需要增加温度。', traits: ['朋友众多', '重视友谊', '有点冷漠'] },
+                    strengths: { icon: '⭐', title: '优势潜能', score: 89, content: '独立创新，思维独特。理性客观，逻辑清晰。追求自由，不受束缚。人道主义，关心社会。', traits: ['创新', '理性', '自由', '人道主义'] },
+                    weaknesses: { icon: '⚠️', title: '劣势警示', score: 69, content: '过于冷漠，情感淡薄。固执己见，难以沟通。理想主义，脱离现实。叛逆独立，不合群。', traits: ['冷漠', '固执', '理想主义', '叛逆'] },
+                    development: { icon: '📈', title: '发展建议', score: 81, content: '增加情感温度，关注他人感受。学会妥协，倾听不同意见。平衡理想和现实，脚踏实地。适度融入集体，不过度独立。', traits: ['增加温度', '学会妥协', '平衡现实'] },
+                    lucky: { icon: '🍀', title: '幸运元素', score: 85, content: '幸运色：蓝色、银色 | 幸运数字：4、13、22、31 | 幸运日：周六 | 幸运石：紫水晶 | 幸运花：蝴蝶兰', traits: ['蓝色', '数字4', '周六', '紫水晶'] },
+                    jobs: { icon: '💡', title: '适合职业', score: 88, content: '科技工程师、发明家、社会工作者、心理学家、天文学家、程序员、慈善机构、未来学家、航空航天', traits: ['科技', '创意', '人道主义', '研究'] },
+                    fortune: { icon: '🎯', title: '年度运势', score: 80, content: '2025年水瓶座创新运势旺盛，适合开拓新领域。事业有突破，但需注意现实。感情需要增加温度。财运平稳。', traits: ['创新旺盛', '事业突破', '需要温度'] }
+                }
+            },
+            '双鱼座': {
+                dimensions: {
+                    personality: { icon: '🎭', title: '性格特质', score: 84, content: '双鱼座温柔梦幻，富有同情心。直觉敏锐，艺术天赋高。情感丰富，善解人意。但有时过于敏感，容易逃避现实。', traits: ['温柔梦幻', '同情心强', '直觉敏锐', '艺术天赋'] },
+                    love: { icon: '💕', title: '爱情运势', score: 89, content: '双鱼座在爱情中浪漫梦幻，全心投入。善于付出，容易牺牲自己。需要精神寄托，渴望灵魂伴侣。容易受伤，需要保护。', traits: ['浪漫梦幻', '善于付出', '容易受伤'] },
+                    career: { icon: '💼', title: '事业发展', score: 77, content: '双鱼座适合需要创意和同情心的工作。在艺术、慈善、医疗、心理等领域表现出色。但需注意现实和执行力。', traits: ['创意能力', '同情心', '需要现实感'] },
+                    health: { icon: '🏥', title: '健康指南', score: 73, content: '双鱼座情感敏感，容易因情绪影响健康。需要注意脚部、淋巴系统和精神健康。建议保持积极心态，多接触大自然。', traits: ['情感敏感', '易情绪化', '需要正能量'] },
+                    wealth: { icon: '💰', title: '财运分析', score: 76, content: '双鱼座理财观念较弱，容易因同情心而破财。需要加强财务规划，学会拒绝。适合艺术品投资。', traits: ['理财较弱', '容易破财', '需要规划'] },
+                    relationships: { icon: '👥', title: '人际关系', score: 91, content: '双鱼座善解人意，朋友众多。富有同情心，乐于助人。但有时过于牺牲自己，需要学会拒绝。', traits: ['善解人意', '同情心强', '过于牺牲'] },
+                    strengths: { icon: '⭐', title: '优势潜能', score: 88, content: '温柔梦幻，富有同情心。直觉敏锐，洞察力强。艺术天赋高，创意十足。善解人意，乐于助人。', traits: ['温柔', '同情心', '直觉', '艺术'] },
+                    weaknesses: { icon: '⚠️', title: '劣势警示', score: 68, content: '过于敏感，容易受伤。逃避现实，不愿面对。优柔寡断，缺乏主见。过度牺牲，忽视自己。', traits: ['敏感', '逃避', '优柔寡断', '过度牺牲'] },
+                    development: { icon: '📈', title: '发展建议', score: 80, content: '增强心理韧性，减少敏感。面对现实，勇于承担。培养主见，学会拒绝。关注自己，适度牺牲。', traits: ['增强韧性', '面对现实', '培养主见'] },
+                    lucky: { icon: '🍀', title: '幸运元素', score: 87, content: '幸运色：海蓝、紫色 | 幸运数字：7、16、25、34 | 幸运日：周四 | 幸运石：海蓝宝 | 幸运花：郁金香', traits: ['海蓝', '数字7', '周四', '海蓝宝'] },
+                    jobs: { icon: '💡', title: '适合职业', score: 85, content: '艺术家、音乐家、心理咨询师、护士、慈善工作者、摄影师、作家、舞蹈家、占卜师', traits: ['艺术', '心理', '慈善', '医疗'] },
+                    fortune: { icon: '🎯', title: '年度运势', score: 81, content: '2025年双鱼座直觉旺盛，艺术创作力强。事业需要脚踏实地，不可过于梦幻。感情生活浪漫，易遇真爱。财运需谨慎。', traits: ['直觉旺盛', '需要现实', '感情浪漫'] }
+                }
+            }
+        };
 
-        function initQuiz() {
-            document.getElementById('totalQuestions').textContent = questions.length;
-            renderQuestions();
-            showQuestion(0);
-            updateProgress();
+        // ========== 城市坐标数据库 ==========
+        const CITY_DATABASE = {
+            '北京': { lat: 39.9042, lng: 116.4074, tz: 8 },
+            '上海': { lat: 31.2304, lng: 121.4737, tz: 8 },
+            '广州': { lat: 23.1291, lng: 113.2644, tz: 8 },
+            '深圳': { lat: 22.5431, lng: 114.0579, tz: 8 },
+            '成都': { lat: 30.5728, lng: 104.0668, tz: 8 },
+            '杭州': { lat: 30.2741, lng: 120.1551, tz: 8 },
+            '重庆': { lat: 29.5630, lng: 106.5516, tz: 8 },
+            '西安': { lat: 34.2658, lng: 108.9541, tz: 8 },
+            '武汉': { lat: 30.5928, lng: 114.3055, tz: 8 },
+            '南京': { lat: 32.0603, lng: 118.7969, tz: 8 },
+            '天津': { lat: 39.3434, lng: 117.3616, tz: 8 },
+            '苏州': { lat: 31.2989, lng: 120.5853, tz: 8 },
+            '长沙': { lat: 28.2282, lng: 112.9388, tz: 8 },
+            '郑州': { lat: 34.7466, lng: 113.6253, tz: 8 },
+            '东莞': { lat: 23.0209, lng: 113.7518, tz: 8 },
+            '青岛': { lat: 36.0671, lng: 120.3826, tz: 8 },
+            '沈阳': { lat: 41.8057, lng: 123.4328, tz: 8 },
+            '宁波': { lat: 29.8683, lng: 121.5440, tz: 8 },
+            '昆明': { lat: 25.0406, lng: 102.7123, tz: 8 },
+            '济南': { lat: 36.6512, lng: 117.1208, tz: 8 }
+        };
+
+        // ========== 天文计算辅助函数 ==========
+        function toJulianDay(date) {
+            const year = date.getFullYear();
+            const month = date.getMonth() + 1;
+            const day = date.getDate();
+            const hour = date.getHours() + date.getMinutes() / 60 + date.getSeconds() / 3600;
+
+            let a = Math.floor((14 - month) / 12);
+            let y = year + 4800 - a;
+            let m = month + 12 * a - 3;
+
+            let jd = day + Math.floor((153 * m + 2) / 5) + 365 * y + Math.floor(y / 4) - Math.floor(y / 100) + Math.floor(y / 400) - 32045;
+            jd = jd + (hour - 12) / 24;
+
+            return jd;
         }
 
-        function renderQuestions() {
-            const container = document.getElementById('questionsContainer');
-            questions.forEach((q, index) => {
-                const section = document.createElement('div');
-                section.className = 'question-section';
-                section.id = `question-${index}`;
-
-                section.innerHTML = `
-                    <div class="question-category">${q.category}</div>
-                    <h3 class="question-title">${q.question}</h3>
-                    <div class="options">
-                        ${q.options.map((opt, optIndex) => `
-                            <div class="option" onclick="selectOption(${index}, ${optIndex}, ${opt.score}, '${opt.type}')">
-                                <div class="option-radio"></div>
-                                <div class="option-text">${opt.text}</div>
-                            </div>
-                        `).join('')}
-                    </div>
-                `;
-
-                container.appendChild(section);
-            });
+        function toRadians(degrees) {
+            return degrees * Math.PI / 180;
         }
 
-        function showQuestion(index) {
-            document.querySelectorAll('.question-section').forEach(section => {
-                section.classList.remove('active');
-            });
-            document.getElementById(`question-${index}`).classList.add('active');
-
-            updateButtons();
-            updateProgress();
+        function toDegrees(radians) {
+            return radians * 180 / Math.PI;
         }
 
-        function selectOption(questionIndex, optionIndex, score, type) {
-            const questionElement = document.getElementById(`question-${questionIndex}`);
-            questionElement.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
-            questionElement.querySelectorAll('.option')[optionIndex].classList.add('selected');
+        function normalizeAngle(angle) {
+            angle = angle % 360;
+            if (angle < 0) angle += 360;
+            return angle;
+        }
 
-            answers[questionIndex] = {
-                dimension: questions[questionIndex].dimension,
-                score: score,
-                type: type
+        // ========== 太阳星座计算 ==========
+        function calculateSunSign(birthDate) {
+            const month = birthDate.getMonth() + 1;
+            const day = birthDate.getDate();
+
+            if ((month === 3 && day >= 21) || (month === 4 && day <= 19)) return ZODIAC_SIGNS[0];
+            if ((month === 4 && day >= 20) || (month === 5 && day <= 20)) return ZODIAC_SIGNS[1];
+            if ((month === 5 && day >= 21) || (month === 6 && day <= 21)) return ZODIAC_SIGNS[2];
+            if ((month === 6 && day >= 22) || (month === 7 && day <= 22)) return ZODIAC_SIGNS[3];
+            if ((month === 7 && day >= 23) || (month === 8 && day <= 22)) return ZODIAC_SIGNS[4];
+            if ((month === 8 && day >= 23) || (month === 9 && day <= 22)) return ZODIAC_SIGNS[5];
+            if ((month === 9 && day >= 23) || (month === 10 && day <= 23)) return ZODIAC_SIGNS[6];
+            if ((month === 10 && day >= 24) || (month === 11 && day <= 22)) return ZODIAC_SIGNS[7];
+            if ((month === 11 && day >= 23) || (month === 12 && day <= 21)) return ZODIAC_SIGNS[8];
+            if ((month === 12 && day >= 22) || (month === 1 && day <= 19)) return ZODIAC_SIGNS[9];
+            if ((month === 1 && day >= 20) || (month === 2 && day <= 18)) return ZODIAC_SIGNS[10];
+            return ZODIAC_SIGNS[11];
+        }
+
+        // ========== 月亮星座计算 ==========
+        function calculateMoonSign(birthDate) {
+            const jd = toJulianDay(birthDate);
+            const T = (jd - 2451545.0) / 36525;
+
+            // 月亮平经度
+            let L = 218.3164477 + 481267.88123421 * T - 0.0015786 * T * T + T * T * T / 538841 - T * T * T * T / 65194000;
+
+            // 月亮平近点角
+            const M = 134.9633964 + 477198.8675055 * T + 0.0087414 * T * T + T * T * T / 69699 - T * T * T * T / 14712000;
+
+            // 月日距角
+            const D = 297.8501921 + 445267.1114034 * T - 0.0018819 * T * T + T * T * T / 545868 - T * T * T * T / 113065000;
+
+            // 太阳平近点角
+            const Ms = 357.5291092 + 35999.0502909 * T - 0.0001536 * T * T + T * T * T / 24490000;
+
+            // 升交点平经度
+            const F = 93.2720950 + 483202.0175233 * T - 0.0036539 * T * T - T * T * T / 3526000 + T * T * T * T / 863310000;
+
+            // 应用主要摄动修正
+            L += 6.288774 * Math.sin(toRadians(M));
+            L += 1.274027 * Math.sin(toRadians(2 * D - M));
+            L += 0.658314 * Math.sin(toRadians(2 * D));
+            L += 0.213618 * Math.sin(toRadians(2 * M));
+            L -= 0.185116 * Math.sin(toRadians(Ms));
+            L -= 0.114332 * Math.sin(toRadians(2 * F));
+
+            L = normalizeAngle(L);
+
+            const signIndex = Math.floor(L / 30);
+            return ZODIAC_SIGNS[signIndex];
+        }
+
+        // ========== 上升星座计算 ==========
+        function calculateAscendant(birthDate, cityName) {
+            if (!cityName || !CITY_DATABASE[cityName]) {
+                return null;
+            }
+
+            const city = CITY_DATABASE[cityName];
+            const jd = toJulianDay(birthDate);
+            const T = (jd - 2451545.0) / 36525;
+
+            // 计算格林尼治恒星时
+            let GMST = 280.46061837 + 360.98564736629 * (jd - 2451545.0) + 0.000387933 * T * T - T * T * T / 38710000;
+            GMST = normalizeAngle(GMST);
+
+            // 计算当地恒星时
+            let LST = GMST + city.lng;
+            LST = normalizeAngle(LST);
+
+            // 黄赤交角
+            const epsilon = 23.439292 - 0.0130042 * T;
+
+            // 计算上升点
+            const lat = toRadians(city.lat);
+            const lstRad = toRadians(LST);
+            const epsRad = toRadians(epsilon);
+
+            let ascRad = Math.atan2(Math.cos(lstRad), -Math.sin(lstRad) * Math.cos(epsRad) - Math.tan(lat) * Math.sin(epsRad));
+            let ascDeg = normalizeAngle(toDegrees(ascRad));
+
+            const signIndex = Math.floor(ascDeg / 30);
+            return ZODIAC_SIGNS[signIndex];
+        }
+
+        // ========== 配对分析算法 ==========
+        function calculateCompatibility(sign1, sign2) {
+            let score = 50; // 基础分
+
+            // 1. 元素相性（30分）
+            const elementPairs = {
+                '火-火': 25, '火-土': 10, '火-风': 20, '火-水': 5,
+                '土-土': 25, '土-风': 10, '土-水': 20,
+                '风-风': 25, '风-水': 10,
+                '水-水': 25
             };
 
-            updateButtons();
-        }
+            const elements = [sign1.element, sign2.element].sort();
+            const elementKey = elements.join('-');
+            score += elementPairs[elementKey] || 0;
 
-        function updateButtons() {
-            const prevBtn = document.getElementById('prevBtn');
-            const nextBtn = document.getElementById('nextBtn');
+            // 2. 宫位相性（20分）
+            const qualityPairs = {
+                '基本-基本': 10, '基本-固定': 15, '基本-变动': 18,
+                '固定-固定': 12, '固定-变动': 16,
+                '变动-变动': 20
+            };
 
-            prevBtn.disabled = currentQuestionIndex === 0;
-            nextBtn.disabled = !answers[currentQuestionIndex];
+            const qualities = [sign1.quality, sign2.quality].sort();
+            const qualityKey = qualities.join('-');
+            score += qualityPairs[qualityKey] || 0;
 
-            if (currentQuestionIndex === questions.length - 1) {
-                nextBtn.textContent = '查看结果';
-            } else {
-                nextBtn.textContent = '下一题';
-            }
-        }
+            // 3. 星座角度（20分）
+            const angleDiff = Math.abs(sign1.index - sign2.index);
+            const angle = Math.min(angleDiff, 12 - angleDiff);
+            const angleBonus = {
+                0: 25,  // 同一星座
+                1: 10,  // 相邻
+                2: 5,   // 六十度
+                3: 20,  // 三分相
+                4: 15,  // 四分相
+                5: 10,  // 五分相
+                6: 30   // 对宫
+            };
+            score += angleBonus[angle] || 0;
 
-        function updateProgress() {
-            const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
-            document.getElementById('progressFill').style.width = progress + '%';
-            document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
-        }
+            const finalScore = Math.min(Math.max(score, 0), 100);
 
-        function nextQuestion() {
-            if (currentQuestionIndex < questions.length - 1) {
-                currentQuestionIndex++;
-                showQuestion(currentQuestionIndex);
-            } else {
-                showResults();
-            }
-        }
+            // 生成详细分析内容
+            const elementDescriptions = {
+                '火-火': '两个火象星座在一起充满激情与活力，你们都热情洋溢、积极主动。这种组合能够创造出强大的化学反应，但也需要注意避免过度竞争和冲突。',
+                '火-土': '火象与土象的组合充满挑战。火象的冲动与土象的稳重形成对比，但如果能够相互平衡，火象能激发土象的活力，土象能稳定火象的情绪。',
+                '火-风': '火象与风象是非常和谐的组合。风助火势，你们能够相互激发创意与热情。火象提供动力，风象提供思想，是充满活力的搭配。',
+                '火-水': '火象与水象的组合较为复杂。火的热情可能让水感到压力，水的敏感可能让火感到束缚。需要双方都付出更多理解和包容。',
+                '土-土': '两个土象星座在一起非常稳定可靠。你们都务实、踏实，注重安全感。这种组合能够建立稳固的关系基础，但要注意避免过于保守和缺乏激情。',
+                '土-风': '土象与风象的组合需要磨合。土象追求稳定，风象追求自由，价值观可能存在差异。但土象能给风象提供安全感，风象能给土象带来新鲜感。',
+                '土-水': '土象与水象是非常和谐的组合。土能容水，你们都重视情感和安全感。土象的稳定能给水象带来安全感，水象的温柔能滋润土象的心灵。',
+                '风-风': '两个风象星座在一起充满智慧与创意。你们都善于沟通、思维活跃，能够进行深入的精神交流。这种组合充满趣味性，但要注意建立稳定的情感基础。',
+                '风-水': '风象与水象的组合较为复杂。风的理性与水的感性形成对比，但风能理解水的情绪，水能感受风的思想。需要相互理解和包容。',
+                '水-水': '两个水象星座在一起情感深厚、心灵相通。你们都敏感细腻，能够深刻理解彼此的情感需求。这种组合充满温情，但要注意避免过度情绪化。'
+            };
 
-        function prevQuestion() {
-            if (currentQuestionIndex > 0) {
-                currentQuestionIndex--;
-                showQuestion(currentQuestionIndex);
-            }
-        }
+            const strengthsMap = {
+                '火-火': ['激情四射', '充满活力', '互相激励', '行动力强'],
+                '火-土': ['互补性强', '相互平衡', '稳中求进'],
+                '火-风': ['思维活跃', '创意无限', '相互激发', '充满乐趣'],
+                '火-水': ['情感丰富', '互相吸引', '充满挑战'],
+                '土-土': ['稳定可靠', '踏实务实', '信任度高', '安全感强'],
+                '土-风': ['视角多元', '互补学习', '平衡发展'],
+                '土-水': ['情感深厚', '相互理解', '温暖体贴', '长久稳定'],
+                '风-风': ['沟通顺畅', '思想共鸣', '智慧碰撞', '趣味十足'],
+                '风-水': ['感性与理性结合', '互相启发', '深度交流'],
+                '水-水': ['心灵相通', '情感深刻', '默契十足', '温柔体贴']
+            };
 
-        function calculateScores() {
-            let domScore = 0;
-            let subScore = 0;
-            let neutralScore = 0;
+            const challengesMap = {
+                '火-火': ['竞争意识强', '容易冲突', '都想主导'],
+                '火-土': ['节奏不同', '价值观差异', '需要磨合'],
+                '火-风': ['缺乏深度', '过于理想化', '需要稳定'],
+                '火-水': ['情绪冲突', '理解困难', '需要包容'],
+                '土-土': ['过于保守', '缺乏激情', '变化缓慢'],
+                '土-风': ['追求不同', '沟通障碍', '需要理解'],
+                '土-水': ['过于敏感', '情绪波动', '需要空间'],
+                '风-风': ['缺乏稳定', '情感疏离', '需要深入'],
+                '风-水': ['理性与感性冲突', '表达方式不同'],
+                '水-水': ['过度情绪化', '缺乏理性', '互相影响']
+            };
 
-            const dimensionScores = {};
-
-            answers.forEach(answer => {
-                if (answer.type === 'dom') {
-                    domScore += answer.score;
-                } else if (answer.type === 'sub') {
-                    subScore += answer.score;
-                } else {
-                    neutralScore += 1;
-                }
-
-                if (!dimensionScores[answer.dimension]) {
-                    dimensionScores[answer.dimension] = { dom: 0, sub: 0 };
-                }
-
-                if (answer.type === 'dom') {
-                    dimensionScores[answer.dimension].dom += answer.score;
-                } else if (answer.type === 'sub') {
-                    dimensionScores[answer.dimension].sub += answer.score;
-                }
-            });
-
-            const totalScore = domScore + subScore;
-            const domPercentage = totalScore > 0 ? Math.round((domScore / totalScore) * 100) : 50;
-            const subPercentage = totalScore > 0 ? Math.round((subScore / totalScore) * 100) : 50;
+            const adviceMap = {
+                '火-火': ['学会倾听', '控制脾气', '给彼此空间', '避免过度竞争'],
+                '火-土': ['尊重差异', '寻找平衡点', '耐心沟通', '相互包容'],
+                '火-风': ['注重情感深度', '建立稳定基础', '保持新鲜感'],
+                '火-水': ['理解情绪差异', '温柔对待', '多些耐心', '学会妥协'],
+                '土-土': ['增加生活情趣', '尝试新事物', '保持浪漫', '打破常规'],
+                '土-风': ['给予自由空间', '开放心态', '增加沟通', '相互学习'],
+                '土-水': ['给予安全感', '情感表达', '相互支持', '共同成长'],
+                '风-风': ['深化情感连接', '建立承诺', '注重实际', '脚踏实地'],
+                '风-水': ['感性与理性平衡', '理解表达方式', '耐心倾听'],
+                '水-水': ['保持理性', '独立空间', '情绪管理', '相互鼓励']
+            };
 
             return {
-                domScore,
-                subScore,
-                neutralScore,
-                domPercentage,
-                subPercentage,
-                dimensionScores
+                score: finalScore,
+                analysis: elementDescriptions[elementKey] || `${sign1.name}与${sign2.name}的组合独具特色。你们各有优势，需要相互理解和包容，共同创造美好的关系。`,
+                strengths: strengthsMap[elementKey] || ['互相吸引', '各有特色', '互补发展'],
+                challenges: challengesMap[elementKey] || ['需要磨合', '理解差异', '相互适应'],
+                advice: adviceMap[elementKey] || ['相互尊重', '开放沟通', '共同成长', '珍惜彼此']
             };
         }
 
-        function showResults() {
-            document.getElementById('questionsContainer').style.display = 'none';
-            document.getElementById('navigationButtons').style.display = 'none';
-            document.getElementById('progressFill').style.width = '100%';
-
-            const scores = calculateScores();
-
-            setTimeout(() => {
-                document.getElementById('resultSection').classList.add('active');
-                displayResults(scores);
-            }, 300);
-        }
-
-        function displayResults(scores) {
-            // 显示百分比条
-            setTimeout(() => {
-                document.getElementById('dominantBar').style.width = scores.domPercentage + '%';
-                document.getElementById('dominantScore').textContent = scores.domPercentage + '%';
-                document.getElementById('submissiveBar').style.width = scores.subPercentage + '%';
-                document.getElementById('submissiveScore').textContent = scores.subPercentage + '%';
-            }, 500);
-
-            // 确定类型
-            let type, typeLabel, description;
-            const diff = Math.abs(scores.domPercentage - scores.subPercentage);
-
-            if (diff < 10) {
-                type = 'Switch 转换型';
-                typeLabel = 'Versatile Personality';
-                description = '您展现出灵活多变的人格特质。您能够根据情境和对象在支配型与顺从型之间自如切换，这种适应能力使您能够在不同的关系动态中找到舒适的位置。您既能享受主导的快感，也能体验被引导的愉悦。这种平衡的特质让您在关系中具有很强的兼容性和包容性。建议您在实践中保持开放的心态，根据实际情况选择最适合的角色定位。';
-            } else if (scores.domPercentage > scores.subPercentage) {
-                if (scores.domPercentage >= 75) {
-                    type = 'Dominant 强支配型';
-                    typeLabel = 'Strong Dominant Personality';
-                    description = '您具有非常明显的支配型人格特质。您天生喜欢掌控局面，在关系中倾向于担任领导和指引的角色。您享受制定规则、做出决策并看到他人服从您的引导。您的自信、果断和责任感使您成为天然的主导者。在关系中，您需要确保尊重对方的边界和意愿，建立基于信任和安全的互动模式。记住，真正的支配不是单纯的控制，而是通过关怀和保护来展现力量。';
-                } else {
-                    type = 'Dominant Leaning 偏支配型';
-                    typeLabel = 'Dominant-Leaning Personality';
-                    description = '您倾向于支配型人格，但同时保持一定的灵活性。您喜欢在关系中占据主导地位，但也愿意倾听和考虑对方的想法。您能够承担领导责任，但不会过分强势。这种相对温和的支配风格让您更容易与不同类型的伙伴建立和谐关系。建议您继续发展自己的领导能力，同时保持对对方需求的敏感度。';
-                }
-            } else {
-                if (scores.subPercentage >= 75) {
-                    type = 'Submissive 强顺从型';
-                    typeLabel = 'Strong Submissive Personality';
-                    description = '您具有非常明显的顺从型人格特质。您在关系中倾向于服从和跟随，享受被引导、被照顾的感觉。您愿意让渡控制权，信任对方为您做出决定。您的温顺、顺从和对他人需求的敏感使您成为理想的追随者。在关系中，您需要寻找值得信任、负责任的伙伴，同时也要学会表达自己的真实需求和边界。记住，真正的顺从是基于自愿和信任，而不是无条件的服从。';
-                } else {
-                    type = 'Submissive Leaning 偏顺从型';
-                    typeLabel = 'Submissive-Leaning Personality';
-                    description = '您倾向于顺从型人格，但同时保持一定的自主性。您喜欢在关系中被引导和照顾，但也会在必要时表达自己的想法和需求。您享受服从带来的安全感，但不会完全放弃自我。这种相对独立的顺从风格让您能够在保持自我的同时享受被支配的快感。建议您继续探索自己舒适的服从边界，同时培养与主导者的良好沟通。';
-                }
+        // ========== 运势生成系统 ==========
+        function seededRandom(seed) {
+            let hash = 0;
+            for (let i = 0; i < seed.length; i++) {
+                hash = ((hash << 5) - hash) + seed.charCodeAt(i);
+                hash = hash & hash;
             }
 
-            document.getElementById('resultType').textContent = type;
-            document.getElementById('resultTypeLabel').textContent = typeLabel;
-            document.getElementById('resultDescription').textContent = description;
-
-            // 显示维度分析
-            displayDimensions(scores.dimensionScores);
+            return function() {
+                hash = (hash * 9301 + 49297) % 233280;
+                return hash / 233280;
+            };
         }
 
-        function displayDimensions(dimensionScores) {
-            const container = document.getElementById('dimensionsContainer');
-            const dimensionNames = {
-                control: '控制欲望\nControl Desire',
-                power: '权力动态\nPower Dynamics',
-                responsibility: '责任承担\nResponsibility',
-                rules: '规则制定\nRule Setting',
-                emotion: '情绪表达\nEmotional Expression',
-                trust: '信任建立\nTrust Building',
-                discipline: '奖惩机制\nReward & Discipline',
-                initiative: '主动性\nInitiative',
-                boundary: '边界设定\nBoundary Setting',
-                communication: '沟通方式\nCommunication Style',
-                decision: '决策模式\nDecision Making',
-                conflict: '冲突处理\nConflict Resolution',
-                care: '照料角色\nCare Role',
-                autonomy: '自主性\nAutonomy',
-                satisfaction: '满足感来源\nSatisfaction Source'
+        function getWeekNumber(date) {
+            const firstDay = new Date(date.getFullYear(), 0, 1);
+            const days = Math.floor((date - firstDay) / (24 * 60 * 60 * 1000));
+            return Math.ceil((days + firstDay.getDay() + 1) / 7);
+        }
+
+        function generateFortune(zodiacSign, period) {
+            const now = new Date();
+            const seed = period === 'week'
+                ? `${zodiacSign.name}-${getWeekNumber(now)}-${now.getFullYear()}`
+                : `${zodiacSign.name}-${now.getMonth()}-${now.getFullYear()}`;
+
+            const random = seededRandom(seed);
+
+            const templates = {
+                overall: [
+                    `${zodiacSign.name}${period === 'week' ? '本周' : '本月'}整体运势良好，各方面发展顺利。保持积极心态，勇敢面对挑战。`,
+                    `${zodiacSign.name}最近运势平稳，适合巩固基础。注意休息，保持身心健康。`,
+                    `${zodiacSign.name}${period === 'week' ? '本周' : '本月'}有突破机会，把握时机。人际关系融洽，贵人运强。`,
+                    `运势上扬，适合展开新计划。保持耐心，稳扎稳打。`
+                ]
             };
 
-            for (let dim in dimensionScores) {
-                const dimData = dimensionScores[dim];
-                const total = dimData.dom + dimData.sub;
-                const percentage = total > 0 ? Math.round((dimData.dom / total) * 100) : 50;
+            const overallScore = Math.floor(random() * 30) + 70;
+            const trend = random() > 0.5 ? '上升' : '稳定';
 
-                let tendency;
-                if (percentage >= 70) {
-                    tendency = '强支配倾向';
-                } else if (percentage >= 55) {
-                    tendency = '偏支配倾向';
-                } else if (percentage >= 45) {
-                    tendency = '平衡状态';
-                } else if (percentage >= 30) {
-                    tendency = '偏顺从倾向';
-                } else {
-                    tendency = '强顺从倾向';
+            return {
+                period: period === 'week' ? '本周运势' : '本月运势',
+                overall: {
+                    score: overallScore,
+                    trend: trend,
+                    summary: templates.overall[Math.floor(random() * templates.overall.length)]
+                },
+                career: {
+                    score: Math.floor(random() * 30) + 70,
+                    content: '工作运势良好，适合推进重要项目。保持专注，注重细节。',
+                    advice: ['把握机会', '积极沟通', '注重细节']
+                },
+                love: {
+                    score: Math.floor(random() * 30) + 70,
+                    content: '感情运势温馨，单身者有机会遇到心仪对象。',
+                    advice: ['真诚表达', '增进了解', '浪漫约会']
+                },
+                wealth: {
+                    score: Math.floor(random() * 30) + 70,
+                    content: '财运平稳，适合稳健投资。避免冲动消费。',
+                    advice: ['理性消费', '稳健投资', '开源节流']
+                },
+                health: {
+                    score: Math.floor(random() * 30) + 70,
+                    content: '健康状况良好，注意休息和饮食均衡。',
+                    advice: ['规律作息', '适度运动', '均衡饮食']
                 }
+            };
+        }
+
+        // ========== 显示结果 ==========
+        function displayResults(sunSign, moonSign, risingSign, partnerSign, compatibility, fortune) {
+            // 显示星座徽章
+            document.getElementById('zodiacSymbol').textContent = sunSign.symbol;
+            document.getElementById('zodiacName').textContent = sunSign.name;
+            document.getElementById('zodiacDates').textContent = sunSign.dates;
+
+            // 显示太阳星座
+            document.getElementById('sunSign').textContent = sunSign.name;
+
+            // 显示月亮和上升星座
+            document.getElementById('moonSign').textContent = moonSign ? moonSign.name : '未填写时间';
+            document.getElementById('risingSign').textContent = risingSign ? risingSign.name : '未填写完整';
+
+            // 获取星座详细内容
+            const zodiacContent = ZODIAC_CONTENT[sunSign.name];
+            if (!zodiacContent) {
+                console.error('未找到星座内容:', sunSign.name);
+                return;
+            }
+
+            // 显示维度卡片
+            const dimensionKeys = ['personality', 'love', 'career', 'health', 'wealth', 'relationships', 'strengths', 'weaknesses', 'development', 'lucky', 'jobs', 'fortune'];
+
+            const grid = document.getElementById('dimensionsGrid');
+            grid.innerHTML = '';
+
+            dimensionKeys.forEach(key => {
+                const dim = zodiacContent.dimensions[key];
+                if (!dim) return;
 
                 const card = document.createElement('div');
                 card.className = 'dimension-card';
+
+                // 生成特质标签HTML
+                const tagsHtml = dim.traits ? dim.traits.map(trait =>
+                    `<span class="dimension-tag">${trait}</span>`
+                ).join('') : '';
+
                 card.innerHTML = `
-                    <div class="dimension-title">${dimensionNames[dim].replace('\n', '<br>')}</div>
-                    <div class="dimension-score">${tendency}</div>
-                    <div class="dimension-bar">
-                        <div class="dimension-bar-fill" style="width: 0%"></div>
+                    <div class="dimension-card-header">
+                        <div class="dimension-card-icon">${dim.icon}</div>
+                        <div class="dimension-card-title">${dim.title}</div>
+                        <div class="dimension-card-score">${dim.score}分</div>
+                    </div>
+                    <div class="dimension-card-body">
+                        <div class="dimension-content">${dim.content}</div>
+                        ${tagsHtml ? `<div class="dimension-tags">${tagsHtml}</div>` : ''}
                     </div>
                 `;
-                container.appendChild(card);
 
-                setTimeout(() => {
-                    card.querySelector('.dimension-bar-fill').style.width = percentage + '%';
-                }, 500);
+                card.addEventListener('click', () => {
+                    const body = card.querySelector('.dimension-card-body');
+                    body.classList.toggle('expanded');
+                });
+
+                grid.appendChild(card);
+            });
+
+            // ========== 配对分析显示 ==========
+            const compatibilitySection = document.getElementById('compatibilitySection');
+            if (partnerSign && compatibility) {
+                compatibilitySection.style.display = 'block';
+
+                // 显示用户和配对星座
+                document.getElementById('yourSignName').textContent = sunSign.name;
+                document.getElementById('yourSignSymbol').textContent = sunSign.symbol;
+                document.getElementById('partnerSignName').textContent = partnerSign.name;
+                document.getElementById('partnerSignSymbol').textContent = partnerSign.symbol;
+
+                // 显示配对分数
+                document.getElementById('compatibilityScore').textContent = compatibility.score;
+
+                // 更新环形进度
+                const circle = document.querySelector('.compatibility-circle-progress');
+                const circumference = 2 * Math.PI * 54; // r=54
+                const offset = circumference - (compatibility.score / 100) * circumference;
+                circle.style.strokeDasharray = `${circumference} ${circumference}`;
+                circle.style.strokeDashoffset = offset;
+
+                // 显示配对等级
+                let level = '';
+                let levelClass = '';
+                if (compatibility.score >= 90) {
+                    level = '天作之合';
+                    levelClass = 'perfect';
+                } else if (compatibility.score >= 75) {
+                    level = '完美匹配';
+                    levelClass = 'great';
+                } else if (compatibility.score >= 60) {
+                    level = '需要磨合';
+                    levelClass = 'good';
+                } else {
+                    level = '富有挑战';
+                    levelClass = 'challenging';
+                }
+
+                const levelBadge = document.getElementById('compatibilityLevel');
+                levelBadge.textContent = level;
+                levelBadge.className = 'compatibility-level ' + levelClass;
+
+                // 显示配对分析内容
+                document.getElementById('compatibilityAnalysis').innerHTML = `
+                    <p>${compatibility.analysis}</p>
+                    <div class="compatibility-details">
+                        <div class="compatibility-detail-item">
+                            <span class="detail-label">优势：</span>
+                            <span class="detail-value">${compatibility.strengths.join('、')}</span>
+                        </div>
+                        <div class="compatibility-detail-item">
+                            <span class="detail-label">挑战：</span>
+                            <span class="detail-value">${compatibility.challenges.join('、')}</span>
+                        </div>
+                        <div class="compatibility-detail-item">
+                            <span class="detail-label">建议：</span>
+                            <span class="detail-value">${compatibility.advice.join('、')}</span>
+                        </div>
+                    </div>
+                `;
+            } else {
+                compatibilitySection.style.display = 'none';
             }
+
+            // ========== 运势显示 ==========
+            const fortuneSection = document.getElementById('fortuneSection');
+            if (fortune && (fortune.week || fortune.month)) {
+                fortuneSection.style.display = 'block';
+
+                // 显示本周运势
+                if (fortune.week) {
+                    const weekFortune = fortune.week;
+                    document.getElementById('weekFortuneContent').innerHTML = `
+                        <div class="fortune-header">
+                            <h3>${weekFortune.period}</h3>
+                            <div class="fortune-date-range">${weekFortune.dateRange}</div>
+                        </div>
+                        <div class="fortune-overall">
+                            <div class="fortune-score-circle">
+                                <div class="fortune-score-value">${weekFortune.overall.score}</div>
+                                <div class="fortune-score-label">综合运势</div>
+                            </div>
+                            <div class="fortune-trend">
+                                <span class="trend-label">趋势：</span>
+                                <span class="trend-value ${weekFortune.overall.trend === '上升' ? 'up' : 'stable'}">${weekFortune.overall.trend}</span>
+                            </div>
+                            <p class="fortune-summary">${weekFortune.overall.summary}</p>
+                        </div>
+                        <div class="fortune-dimensions">
+                            <div class="fortune-dimension">
+                                <div class="fortune-dimension-header">
+                                    <span class="fortune-dimension-icon">💼</span>
+                                    <span class="fortune-dimension-title">事业运势</span>
+                                    <span class="fortune-dimension-score">${weekFortune.career.score}分</span>
+                                </div>
+                                <div class="fortune-dimension-bar">
+                                    <div class="fortune-dimension-fill" style="width: ${weekFortune.career.score}%"></div>
+                                </div>
+                                <p class="fortune-dimension-content">${weekFortune.career.content}</p>
+                                <div class="fortune-dimension-advice">
+                                    ${weekFortune.career.advice.map(a => `<span class="advice-tag">💡 ${a}</span>`).join('')}
+                                </div>
+                            </div>
+                            <div class="fortune-dimension">
+                                <div class="fortune-dimension-header">
+                                    <span class="fortune-dimension-icon">💕</span>
+                                    <span class="fortune-dimension-title">爱情运势</span>
+                                    <span class="fortune-dimension-score">${weekFortune.love.score}分</span>
+                                </div>
+                                <div class="fortune-dimension-bar">
+                                    <div class="fortune-dimension-fill" style="width: ${weekFortune.love.score}%"></div>
+                                </div>
+                                <p class="fortune-dimension-content">${weekFortune.love.content}</p>
+                                <div class="fortune-dimension-advice">
+                                    ${weekFortune.love.advice.map(a => `<span class="advice-tag">💡 ${a}</span>`).join('')}
+                                </div>
+                            </div>
+                            <div class="fortune-dimension">
+                                <div class="fortune-dimension-header">
+                                    <span class="fortune-dimension-icon">💰</span>
+                                    <span class="fortune-dimension-title">财运</span>
+                                    <span class="fortune-dimension-score">${weekFortune.wealth.score}分</span>
+                                </div>
+                                <div class="fortune-dimension-bar">
+                                    <div class="fortune-dimension-fill" style="width: ${weekFortune.wealth.score}%"></div>
+                                </div>
+                                <p class="fortune-dimension-content">${weekFortune.wealth.content}</p>
+                                <div class="fortune-dimension-advice">
+                                    ${weekFortune.wealth.advice.map(a => `<span class="advice-tag">💡 ${a}</span>`).join('')}
+                                </div>
+                            </div>
+                            <div class="fortune-dimension">
+                                <div class="fortune-dimension-header">
+                                    <span class="fortune-dimension-icon">🏥</span>
+                                    <span class="fortune-dimension-title">健康运势</span>
+                                    <span class="fortune-dimension-score">${weekFortune.health.score}分</span>
+                                </div>
+                                <div class="fortune-dimension-bar">
+                                    <div class="fortune-dimension-fill" style="width: ${weekFortune.health.score}%"></div>
+                                </div>
+                                <p class="fortune-dimension-content">${weekFortune.health.content}</p>
+                                <div class="fortune-dimension-advice">
+                                    ${weekFortune.health.advice.map(a => `<span class="advice-tag">💡 ${a}</span>`).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    document.getElementById('weekFortuneTab').style.display = 'block';
+                } else {
+                    document.getElementById('weekFortuneTab').style.display = 'none';
+                }
+
+                // 显示本月运势
+                if (fortune.month) {
+                    const monthFortune = fortune.month;
+                    document.getElementById('monthFortuneContent').innerHTML = `
+                        <div class="fortune-header">
+                            <h3>${monthFortune.period}</h3>
+                            <div class="fortune-date-range">${monthFortune.dateRange}</div>
+                        </div>
+                        <div class="fortune-overall">
+                            <div class="fortune-score-circle">
+                                <div class="fortune-score-value">${monthFortune.overall.score}</div>
+                                <div class="fortune-score-label">综合运势</div>
+                            </div>
+                            <div class="fortune-trend">
+                                <span class="trend-label">趋势：</span>
+                                <span class="trend-value ${monthFortune.overall.trend === '上升' ? 'up' : 'stable'}">${monthFortune.overall.trend}</span>
+                            </div>
+                            <p class="fortune-summary">${monthFortune.overall.summary}</p>
+                        </div>
+                        <div class="fortune-dimensions">
+                            <div class="fortune-dimension">
+                                <div class="fortune-dimension-header">
+                                    <span class="fortune-dimension-icon">💼</span>
+                                    <span class="fortune-dimension-title">事业运势</span>
+                                    <span class="fortune-dimension-score">${monthFortune.career.score}分</span>
+                                </div>
+                                <div class="fortune-dimension-bar">
+                                    <div class="fortune-dimension-fill" style="width: ${monthFortune.career.score}%"></div>
+                                </div>
+                                <p class="fortune-dimension-content">${monthFortune.career.content}</p>
+                                <div class="fortune-dimension-advice">
+                                    ${monthFortune.career.advice.map(a => `<span class="advice-tag">💡 ${a}</span>`).join('')}
+                                </div>
+                            </div>
+                            <div class="fortune-dimension">
+                                <div class="fortune-dimension-header">
+                                    <span class="fortune-dimension-icon">💕</span>
+                                    <span class="fortune-dimension-title">爱情运势</span>
+                                    <span class="fortune-dimension-score">${monthFortune.love.score}分</span>
+                                </div>
+                                <div class="fortune-dimension-bar">
+                                    <div class="fortune-dimension-fill" style="width: ${monthFortune.love.score}%"></div>
+                                </div>
+                                <p class="fortune-dimension-content">${monthFortune.love.content}</p>
+                                <div class="fortune-dimension-advice">
+                                    ${monthFortune.love.advice.map(a => `<span class="advice-tag">💡 ${a}</span>`).join('')}
+                                </div>
+                            </div>
+                            <div class="fortune-dimension">
+                                <div class="fortune-dimension-header">
+                                    <span class="fortune-dimension-icon">💰</span>
+                                    <span class="fortune-dimension-title">财运</span>
+                                    <span class="fortune-dimension-score">${monthFortune.wealth.score}分</span>
+                                </div>
+                                <div class="fortune-dimension-bar">
+                                    <div class="fortune-dimension-fill" style="width: ${monthFortune.wealth.score}%"></div>
+                                </div>
+                                <p class="fortune-dimension-content">${monthFortune.wealth.content}</p>
+                                <div class="fortune-dimension-advice">
+                                    ${monthFortune.wealth.advice.map(a => `<span class="advice-tag">💡 ${a}</span>`).join('')}
+                                </div>
+                            </div>
+                            <div class="fortune-dimension">
+                                <div class="fortune-dimension-header">
+                                    <span class="fortune-dimension-icon">🏥</span>
+                                    <span class="fortune-dimension-title">健康运势</span>
+                                    <span class="fortune-dimension-score">${monthFortune.health.score}分</span>
+                                </div>
+                                <div class="fortune-dimension-bar">
+                                    <div class="fortune-dimension-fill" style="width: ${monthFortune.health.score}%"></div>
+                                </div>
+                                <p class="fortune-dimension-content">${monthFortune.health.content}</p>
+                                <div class="fortune-dimension-advice">
+                                    ${monthFortune.health.advice.map(a => `<span class="advice-tag">💡 ${a}</span>`).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    document.getElementById('monthFortuneTab').style.display = 'block';
+                } else {
+                    document.getElementById('monthFortuneTab').style.display = 'none';
+                }
+
+                // 设置默认显示的标签页
+                if (fortune.week) {
+                    showFortuneTab('week');
+                } else if (fortune.month) {
+                    showFortuneTab('month');
+                }
+            } else {
+                fortuneSection.style.display = 'none';
+            }
+
+            // 切换到结果页
+            document.getElementById('inputPage').classList.remove('active');
+            document.getElementById('resultPage').classList.add('active');
+            window.scrollTo(0, 0);
         }
 
-        window.onload = initQuiz;
+        // ========== 运势标签页切换 ==========
+        function showFortuneTab(tab) {
+            // 移除所有活跃状态
+            document.querySelectorAll('.fortune-tab').forEach(t => {
+                t.classList.remove('active');
+            });
+            document.querySelectorAll('.fortune-tab-content').forEach(c => {
+                c.classList.remove('active');
+            });
+
+            // 激活选中的标签页
+            document.getElementById(tab + 'FortuneTab').classList.add('active');
+            document.getElementById(tab + 'FortuneContent').classList.add('active');
+        }
+
+        // ========== 操作按钮 ==========
+        function restartAnalysis() {
+            console.log('重新测试按钮被点击 - 开始重置');
+
+            // 重置数据
+            userData = {
+                birthDate: null,
+                birthTime: null,
+                birthCity: null,
+                needMatch: false,
+                partnerDate: null,
+                needWeekFortune: true,
+                needMonthFortune: true
+            };
+
+            // 重置表单
+            document.getElementById('birthDate').value = '';
+            document.getElementById('birthTime').value = '';
+            document.getElementById('birthCity').value = '';
+            document.getElementById('partnerDate').value = '';
+
+            const needMatchYes = document.getElementById('needMatchYes');
+            const needMatchNo = document.getElementById('needMatchNo');
+            const partnerInfo = document.getElementById('partnerInfo');
+
+            if (needMatchYes) needMatchYes.checked = false;
+            if (needMatchNo) needMatchNo.checked = true;
+            if (partnerInfo) partnerInfo.style.display = 'none';
+
+            const weekFortune = document.getElementById('weekFortune');
+            const monthFortune = document.getElementById('monthFortune');
+            if (weekFortune) weekFortune.checked = true;
+            if (monthFortune) monthFortune.checked = true;
+
+            console.log('表单重置完成');
+
+            // 隐藏结果页和输入页，显示封面页
+            const resultPage = document.getElementById('resultPage');
+            const inputPage = document.getElementById('inputPage');
+            const coverPage = document.getElementById('coverPage');
+
+            console.log('切换页面前:', {
+                resultPage: resultPage.className,
+                inputPage: inputPage.className,
+                coverPage: coverPage.className
+            });
+
+            resultPage.classList.remove('active');
+            inputPage.classList.remove('active');
+            coverPage.classList.remove('hidden');
+
+            console.log('切换页面后:', {
+                resultPage: resultPage.className,
+                inputPage: inputPage.className,
+                coverPage: coverPage.className
+            });
+
+            // 重置步骤
+            currentStep = 1;
+            document.querySelectorAll('.input-step').forEach(step => step.classList.remove('active'));
+            const step1 = document.getElementById('step1');
+            if (step1) step1.classList.add('active');
+
+            document.querySelectorAll('.progress-step').forEach(step => {
+                step.classList.remove('active', 'completed');
+            });
+            const progressStep1 = document.getElementById('progressStep1');
+            if (progressStep1) progressStep1.classList.add('active');
+
+            console.log('步骤重置完成');
+
+            // 滚动到顶部
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            console.log('重置完成，应该已返回封面页');
+        }
     </script>
 </body>
 </html>
